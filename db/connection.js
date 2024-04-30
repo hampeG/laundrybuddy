@@ -4,8 +4,13 @@ import dotenv from "dotenv";
 dotenv.config();
 const url = process.env.CONNECTION_STRING;
 
-mongoose.connect(url)
-    .then(() => console.log('Connected to the database'))
-    .catch(err => console.log(`Error connection to the datbase: ${err}`))
+const connection = async () => {
+    try {
+        await mongoose.connect(url);
+        console.log('Connected to the database');
+    } catch (err) {
+        console.log(`Error connecting to the database: ${err}`);
+    }
+};
 
-module.exports = mongoose;
+export default connection;

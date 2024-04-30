@@ -1,19 +1,21 @@
 import express from "express";
-import mongoose from "mongoose";
 import dotenv from "dotenv";
+import connection from "./db/connection.js";
 
 dotenv.config();
 const app = express();
 
-// Connecting to MongoDB by using the Connection String
-const url = process.env.CONNECTION_STRING;
+// We call the connection function to establish MongoDB connection
+connection()
+    .then(() => {
+        // We start the server once the connection is established
+        const PORT = process.env.PORT || 3000;
+        app.listen(PORT, () => {
+            console.log(`Server is running on port ${PORT}`);
+        });
+    })
+    .catch(err => {
+        console.error(`Error connecting to the database: ${err}`);
+        process.exit(1);
+    });
 
-mongoose.connect(url)
-    .then(() => console.log('Connected to the database'))
-    .catch(err => console.log(`Error connecting to the database: ${err}`));
-
-// Starting the server on Port 3000
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
