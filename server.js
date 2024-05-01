@@ -1,9 +1,12 @@
 import express from "express";
 import dotenv from "dotenv";
 import connection from "./db/connection.js";
+import router from "./routes.js";
 
 dotenv.config();
 const app = express();
+app.use(express.json());
+app.use(router);
 
 // We call the connection function to establish MongoDB connection
 connection()

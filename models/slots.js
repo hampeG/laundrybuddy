@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 
 const slotSchema = new mongoose.Schema({
-    date: Date,
+    date: Date, 
     time: String,
     availability: Boolean
 })
 
-const Slot = model("Slot", slotSchema);
+const Slot = mongoose.model("Slot", slotSchema);
 export default Slot;
