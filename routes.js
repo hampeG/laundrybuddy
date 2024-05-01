@@ -8,12 +8,14 @@ const router = express.Router();
 // Slots endpoints
 router.post("/api/slots", slotController.createSlot);
 router.get("/api/slots", slotController.getAllSlots);
+router.get("/api/slots/:id", slotController.getSlotById);
 router.put("/api/slots/:id", slotController.updateSlot);
 router.delete("/api/slots/:id", slotController.deleteSlot);
 
 // Users endpoints
 router.post("/api/users", userController.createUser);
 router.get("/api/users", userController.getAllUsers);
+router.get("/api/users/:id", userController.getUserById);
 router.put("/api/users/:id", userController.updateUser);
 router.delete("/api/users/:id", userController.deleteUser);
 

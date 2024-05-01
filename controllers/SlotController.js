@@ -19,6 +19,19 @@ export const getAllSlots = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+// Function used to get a slot by ID
+export const getSlotById = async (req, res) => {
+    const { id } = req.params;
+    try {
+      const slot = await Slot.findById(id);
+      if (!slot) {
+        return res.status(404).json({ message: "Slot not found" });
+      }
+      res.status(200).json(slot);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  };
 
 // Function used to update slot by ID
 export const updateSlot = async (req, res) => {
