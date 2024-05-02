@@ -1,7 +1,7 @@
 import express from "express";
 import * as slotController from "./controllers/SlotController.js";
 import * as userController from "./controllers/UserController.js";
-// import * as bookingController from "./controllers/BookingController.js";
+import * as bookingController from "./controllers/BookingController.js";
 
 const router = express.Router();
 
@@ -19,10 +19,11 @@ router.get("/api/users/:id", userController.getUserById);
 router.put("/api/users/:id", userController.updateUser);
 router.delete("/api/users/:id", userController.deleteUser);
 
-// // Bookings endpoints
-// router.post("/api/bookings", bookingController.createBooking);
-// router.get("/api/bookings", bookingController.getAllBookings);
-// router.put("/api/bookings/:id", bookingController.updateBooking);
-// router.delete("/api/bookings/:id", bookingController.deleteBooking);
+// Bookings endpoints
+router.post("/api/bookings", bookingController.createBooking);
+router.get("/api/bookings", bookingController.getAllBookings);
+router.get("/api/bookings/:id", bookingController.getBookingById);
+router.put("/api/bookings/:id", bookingController.updateBookingById);
+router.delete("/api/bookings/:id", bookingController.deleteBookingById);
 
 export default router;
