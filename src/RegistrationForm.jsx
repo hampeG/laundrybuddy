@@ -15,20 +15,41 @@ function RegistrationForm() {
       ...prevData,
       [name]: value
     }));
+    console.log("formData:", formData);
   }
 
   // Event handler for form submission
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    // Will add backend logic here
-    console.log(formData);
 
-    setFormData({
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: ""
-    });
+      // Check if all required fields are provided
+  if (!formData.first_name || !formData.last_name || !formData.email || !formData.password) {
+    console.error("All required fields must be provided.");
+    return;
+  }
+    try {
+      const response = await fetch("/api/users", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData)
+      });
+        console.log(formData);
+      if (!response.ok) {
+        throw new Error("Failed to submit form")
+      }
+
+      const data = await response.json();
+      console.log(data);
+
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: ""
+      });
+    } catch (error) {
+      console.error(`Error submitting form: ${error}`);
+    }
   }
 
   return (
@@ -40,7 +61,7 @@ function RegistrationForm() {
             type="text"
             placeholder="First name"
             id="firstName"
-            name="firstName"
+            name="first_name"
             autoComplete="off"
             value={formData.firstName}
             onChange={handleChange}
@@ -52,7 +73,7 @@ function RegistrationForm() {
             type="text"
             placeholder="Last name"
             id="lastName"
-            name="lastName"
+            name="last_name"
             autoComplete="off"
             value={formData.lastName}
             onChange={handleChange}
