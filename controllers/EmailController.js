@@ -12,15 +12,15 @@ export const sendEmail = async (req, res) => {
       port: 587, 
       secure: false, 
       auth: {
-        user: 'zgjimizh2409@gmail.com', 
-        pass: 'xccr olwo ngpy rwoq', 
+        user: 'laundrybuddyse@gmail.com', 
+        pass: 'acmh pxfl hcyc irkn', 
       },
     });
 
     
     await transporter.sendMail({
         from: `${email}`, 
-        to: 'zgjimizh2409@gmail.com', 
+        to: 'laundrybuddyse@gmail.com', 
         subject: 'New Contact Form Submission',
         text: `
           Name: ${first_name} ${last_name}

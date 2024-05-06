@@ -17,7 +17,11 @@ const ContactForm = () => {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      await axios.post('/api/sendEmail', formData); // Endpoint for sending email
+      // Save data to the database
+    await axios.post('/api/contactForms', formData);
+
+    // Send email
+    await axios.post('/api/sendEmail', formData);
       alert('Contact form submitted successfully!');
       setFormData({
         first_name: '',
