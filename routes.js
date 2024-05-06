@@ -2,6 +2,9 @@ import express from "express";
 import * as slotController from "./controllers/SlotController.js";
 import * as userController from "./controllers/UserController.js";
 import * as bookingController from "./controllers/BookingController.js";
+import * as contactFormController from "./controllers/ContactFormController.js";
+import * as emailController from './controllers/EmailController.js';
+
 
 const router = express.Router();
 
@@ -25,5 +28,15 @@ router.get("/api/bookings", bookingController.getAllBookings);
 router.get("/api/bookings/:id", bookingController.getBookingById);
 router.put("/api/bookings/:id", bookingController.updateBookingById);
 router.delete("/api/bookings/:id", bookingController.deleteBookingById);
+
+// Contact Form endpoints
+router.post("/api/contactForms", contactFormController.createContactFormEntry);
+router.get("/api/contactForms", contactFormController.getAllContactFormEntries);
+router.get("/api/contactForms/:id", contactFormController.getContactFormEntryById);
+router.put("/api/contactForms/:id", contactFormController.updateContactFormEntry);
+router.delete("/api/contactForms/:id", contactFormController.deleteContactFormEntry);
+
+// Endpoint to send email
+router.post('/api/sendEmail', emailController.sendEmail);
 
 export default router;
