@@ -4,14 +4,18 @@ import BookingService from "../services/BookingService.js";
 // Function to create a new booking
 export const createBooking = async (req, res) => {
   try {
-    const { user_id, slot_id } = req.body;
-    const bookingDate = req.body.bookingDate;
+    const { user_id, slot_id, bookingDate } = req.body;
+
+    if (!user_id || !slot_id || !bookingDate) {
+      return res.status(400).json({ message: "Missing required fields" });
+    }
+
     const newBooking = await BookingService.createBooking(
       user_id,
       slot_id,
       bookingDate
     );
-    res.status(201).json(newBooking);
+    res.status(201).json({ message: "Booking confirmed", booking: newBooking });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
@@ -69,12 +73,10 @@ export const deleteBookingById = async (req, res) => {
   try {
     const { id } = req.params;
     const canceledBooking = await BookingService.cancelBooking(id);
-    res
-      .status(200)
-      .json({
-        message: "Booking canceled successfully",
-        booking: canceledBooking,
-      });
+    res.status(200).json({
+      message: "Booking canceled successfully",
+      booking: canceledBooking,
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
