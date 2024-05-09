@@ -3,6 +3,7 @@ import React from 'react';
 import Home from "./Home.jsx";
 import Booking from "./Booking.jsx";
 import ContactForm from './ContactForm';
+import RegistrationForm from "./RegistrationForm.jsx";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/book/:slotId" element={<Booking />} />
       </Routes>
       <ContactForm />
+      <RegistrationForm />
     </Router>
   );
 }

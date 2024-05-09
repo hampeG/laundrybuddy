@@ -7,7 +7,8 @@ const userSchema = new mongoose.Schema({
     password: {type: String, required: true},
     phone_number: {type: String, unique: true},
     apartment_number: String, 
-    role: { type: String, default: "Tenant" }   
+    role: { type: String, default: "Tenant" } ,
+    bookingCredit: { type: Number, default: 1 }  
 })
 
 const User = mongoose.model("User", userSchema);
