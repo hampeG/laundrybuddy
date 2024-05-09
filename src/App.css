@@ -1,1 +1,23 @@
+.custom-navbar {
+    background-color: #0EBB9C !important;
+    height: 100px; /* Increase the height of the Navbar */
+}
+
+.navbar-brand {
+    margin-right: 20px; /* Adjust margin to move the logo slightly to the left */
+}
+
+.navbar-nav {
+    flex-grow: 1;
+    justify-content: center;
+}
+
+.ml-auto {
+    margin-left: 20px; /* Adjust margin to move the button to the left */
+}
+
+.navbar-toggler {
+    border-color: transparent; /* Remove border color from the toggler */
+}
+
 
