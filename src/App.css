@@ -1,10 +1,12 @@
 .custom-navbar {
     background-color: #0EBB9C !important;
-    height: 100px; /* Increase the height of the Navbar */
+    height: 100px; 
 }
 
+
 .navbar-brand {
-    margin-right: 20px; /* Adjust margin to move the logo slightly to the left */
+    margin-left: 50px;
+    
 }
 
 .navbar-nav {
@@ -13,11 +15,55 @@
 }
 
 .ml-auto {
-    margin-left: 20px; /* Adjust margin to move the button to the left */
+    margin-left: 20px; 
 }
 
 .navbar-toggler {
-    border-color: transparent; /* Remove border color from the toggler */
+    border-color: transparent; 
 }
 
+.nav-link {
+    color: white !important;
+    font-size: 20px !important;
+    justify-content: center !important;
+    margin-left: 70px !important;
+    
+}
 
+.navbar-btn {
+    width: 200px !important;
+    height: 53px !important;
+    border-radius: 30px !important;
+    background-color: #FFD02C !important;
+    color: white !important;
+    font-size: 30px !important;
+    font-weight: bold !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    
+    
+}
+
+.navbar-collapse {
+    background-color: #0EBB9C !important; 
+}
+
+@media (max-width: 991.98px) {
+    .navbar-btn {
+      width: 150px !important; 
+      height: 40px !important; 
+      font-size: 20px !important; 
+      margin-left: 22px !important;
+    }
+  }
+
+  @media (min-width: 992px) {
+    .navbar-nav {
+      margin-left: auto; 
+    }
+  
+    .navbar-btn {
+      margin-right: auto; 
+    }
+  }
