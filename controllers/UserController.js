@@ -5,10 +5,16 @@ import User from "../models/users.js";
 export const createUser = async (req, res) => {
   try {
     
-    const { first_name, last_name, email, password } = req.body; // Destructure the request body to extract fields
+    const { first_name, last_name, email, password } = req.body;
 
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Check if the email already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(409).json({ message: "Email already exists" });
+    }
 
     const newUser = await User.create({
       first_name,
@@ -18,7 +24,6 @@ export const createUser = async (req, res) => {
     });
     res.status(201).json(newUser);
   } catch (error) {
-    console.log(error)
     res.status(400).json({ message: error.message });
   }
 };
