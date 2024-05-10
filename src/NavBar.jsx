@@ -24,8 +24,7 @@ const NavBar = () => {
           <Nav.Link href="#" className="nav-link"><FontAwesomeIcon icon={faAddressBook} />   Contact</Nav.Link>
         </Nav>
         <Nav className="ml-auto justify-content-end">
-            <Button variant="light" className="navbar-btn"><FontAwesomeIcon icon={faUser} /> Sign Up</Button>
-            <Button variant="light" className="navbar-btn"><FontAwesomeIcon icon={faSignInAlt} /> Login</Button>
+            <Button variant="light" className="navbar-btn"><FontAwesomeIcon icon={faSignInAlt} /> Login/Register</Button>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
