@@ -7,6 +7,9 @@ function RegistrationForm() {
         email: "",
         password: ""
     });
+    
+    const [errorMessage, setErrorMessage] = useState("");
+    const [successMessage, setSuccessMessage] = useState("");
 
     // Event handler for input changes
   function handleChange(e) {
@@ -20,6 +23,9 @@ function RegistrationForm() {
   // Event handler for form submission
   async function handleSubmit(e) {
     e.preventDefault();
+
+    setErrorMessage("");
+    setSuccessMessage("");
     try {
       const response = await fetch("/api/users", {
         method: "POST",
@@ -27,12 +33,18 @@ function RegistrationForm() {
         body: JSON.stringify(formData)
       });
 
-      setFormData({
-        first_name: "",
-        last_name: "",
-        email: "",
-        password: ""
-      });
+      if (response.ok) {
+        setSuccessMessage("Account was successfully registered!");
+        setFormData({
+          first_name: "",
+          last_name: "",
+          email: "",
+          password: "",
+        });
+      } else if (response.status === 409) {
+        const data = await response.json();
+        setErrorMessage(data.message);
+      }
     } catch (error) {
       console.error(`Error submitting form: ${error}`);
     }
@@ -41,6 +53,8 @@ function RegistrationForm() {
   return (
     <div>
       <h2>LaundryBuddy logo goes here</h2>
+      {errorMessage && <div className="error">{errorMessage}</div>}
+      {successMessage && <div className="success">{successMessage}</div>}
       <form onSubmit={handleSubmit}>
         <div>
           <input type="text" placeholder="First name" id="firstName" name="first_name" autoComplete="off" value={formData.first_name} onChange={handleChange} required />
