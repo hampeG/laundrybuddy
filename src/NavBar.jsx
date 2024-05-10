@@ -3,14 +3,13 @@ import { Navbar, Nav, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faAddressBook, faCalendarAlt , faInfoCircle, faUser,faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 import './App.css';
-import logo from './lb-logo.png'; 
 
 const NavBar = () => {
   return (
     <Navbar expand="lg" fixed="top" className="custom-navbar">
       <Navbar.Brand href="#">
         <img
-          src={logo}
+          src="src/images/lb-logo.png"
           alt="logo"
           style={{ width: '160px', height: '53px' }}
         />
