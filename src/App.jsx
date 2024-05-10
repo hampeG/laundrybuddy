@@ -3,6 +3,7 @@ import React from 'react';
 import Home from "./Home.jsx";
 import Booking from "./Booking.jsx";
 import ContactForm from './ContactForm';
+import NavBar from "./NavBar.jsx";
 import RegistrationForm from "./RegistrationForm.jsx";
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
       </Routes>
       <ContactForm />
       <RegistrationForm />
+      <NavBar/>
     </Router>
   );
 }
