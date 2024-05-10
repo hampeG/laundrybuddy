@@ -1,11 +1,24 @@
+import bcrypt from "bcrypt";
 import User from "../models/users.js";
 
 // Function used to create new user
 export const createUser = async (req, res) => {
   try {
-    const newUser = await User.create(req.body);
+    
+    const { first_name, last_name, email, password } = req.body; // Destructure the request body to extract fields
+
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const newUser = await User.create({
+      first_name,
+      last_name,
+      email,
+      password: hashedPassword
+    });
     res.status(201).json(newUser);
   } catch (error) {
+    console.log(error)
     res.status(400).json({ message: error.message });
   }
 };
