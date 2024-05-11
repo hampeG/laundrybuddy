@@ -22,7 +22,7 @@ function Booking() {
   const handleBooking = () => {
     if (slot) {
       const bookingData = {
-        user_id: "66389fe8e6272fa50172a90f", // Replace with an actual user ID
+        user_id: "663debb357bf28800a28eeda", // Replace with an actual user ID
         slot_id: slot._id,
         bookingDate: slot.date,
       };
