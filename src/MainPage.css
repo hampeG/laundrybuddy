@@ -1,0 +1,67 @@
+.mainContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100vh;
+    background: #0ebb9c;
+    color: white;
+    padding: 0 100px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.content {
+    display: flex; 
+    flex-direction: column; 
+    align-items: center;
+    z-index: 2; 
+    width: calc(50% - 0px);
+    padding: 0 20px; 
+    text-transform: uppercase;
+}
+
+.heroImage {
+    width: calc(50% - 50px); 
+    position: absolute;
+    right: 120px;
+    top: 50%;
+    transform: translateY(-50%);
+    clip-path: polygon(10% 0, 100% 0%, 100% 100%, 0 100%);
+}
+
+.bookButton {
+    background-color: #ffc107 !important;
+    color: white !important;
+    border: none !important;
+    padding: 12px 24px !important;
+    font-size: 18px !important;
+    border-radius: 10px !important;
+    cursor: pointer;
+    margin-top: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+}
+
+.bookButton:hover {
+    background-color: #e0a800 !important;
+}
+
+@media (max-width: 992px) {
+    .mainContainer {
+        flex-direction: column; 
+        justify-content: center;
+        background: #0ebb9c; 
+        padding: 50px;
+    }
+
+    .content, .heroImage {
+        width: 100%; 
+        text-align: center; 
+        padding: 20px;
+        position: static; 
+        transform: none;
+    }
+
+    .heroImage {
+        clip-path: none; 
+    }
+}
