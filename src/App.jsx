@@ -4,6 +4,7 @@ import Booking from "./Booking.jsx";
 import ContactForm from './ContactForm';
 import NavBar from "./NavBar.jsx";
 import RegistrationForm from "./RegistrationForm.jsx";
+import LoginForm from "./LoginForm.jsx"
 import MainPage from "./MainPage.jsx";
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
       <ContactForm />
       <RegistrationForm />
       <NavBar/>
+      <LoginForm />
       <MainPage/>
     </Router>
   );
