@@ -31,10 +31,10 @@ function LoginForm() {
 
       if (response.ok) {
         const { token } = await response.json();
-        // Store token in local storage or session storage
+        // Stores token in the browsers local storage
         localStorage.setItem("token", token);
-        // Redirect user to dashboard or other protected route
-        window.location.replace("/dashboard");
+        // Redirect user to main page
+        window.location.replace("/");
       } else {
         const data = await response.json();
         setErrorMessage(data.message);
@@ -50,10 +50,10 @@ function LoginForm() {
       {errorMessage && <div className="error">{errorMessage}</div>}
       <form onSubmit={handleSubmit}>
         <div>
-          <input type="email" placeholder="Email" id="email" name="email" autoComplete="off" value={formData.email} onChange={handleChange} required />
+          <input type="email" placeholder="Email" id="loginEmail" name="email" autoComplete="off" value={formData.email} onChange={handleChange} required />
         </div>
         <div>
-          <input type="password" placeholder="Password" id="password" name="password" autoComplete="off" value={formData.password} onChange={handleChange} required />
+          <input type="password" placeholder="Password" id="loginPassword" name="password" autoComplete="off" value={formData.password} onChange={handleChange} required />
         </div>
         <button type="submit">Login</button>
         <p>Not a member? Create account here</p>
