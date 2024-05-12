@@ -39,4 +39,7 @@ router.delete("/api/contactForms/:id", contactFormController.deleteContactFormEn
 // Endpoint to send email
 router.post('/api/sendEmail', emailController.sendEmail);
 
+// Login endpoint
+router.post("/api/login", userController.loginUser);
+
 export default router;
