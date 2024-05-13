@@ -4,6 +4,9 @@ import * as userController from "./controllers/UserController.js";
 import * as bookingController from "./controllers/BookingController.js";
 import * as contactFormController from "./controllers/ContactFormController.js";
 import * as emailController from './controllers/EmailController.js';
+import * as analyticsController from './controllers/AnalyticsController.js';
+import authenticateToken from './middlewares/authenticateToken.js';
+
 
 
 const router = express.Router();
@@ -41,5 +44,12 @@ router.post('/api/sendEmail', emailController.sendEmail);
 
 // Login endpoint
 router.post("/api/login", userController.loginUser);
+router.post("/api/logout", userController.logoutUser);
+
+// Check-session endpoint
+router.get("/api/check-session", authenticateToken, userController.checkSession);
+
+// Analytics endpoint
+router.get('/api/analytics', authenticateToken, analyticsController.getAnalytics);
 
 export default router;

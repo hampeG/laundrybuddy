@@ -32,6 +32,43 @@ export const loginUser = async (req, res) => {
   }
 }
 
+export const logoutUser = async (req, res) => {
+  // Assuming client-side token management
+  res.status(200).json({ message: "Logged out successfully." });
+};
+
+export const checkSession = async (req, res) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1]; // Bearer Token
+
+  if (!token) {
+    return res.status(401).json({ message: "No token provided." });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Optionally add more checks or transformations
+    const userInfo = {
+      id: user._id,
+      email: user.email,
+      role: user.role
+    };
+
+    res.status(200).json({ message: "Session is valid", user: userInfo });
+  } catch (error) {
+    if (error instanceof jwt.JsonWebTokenError) {
+      return res.status(403).json({ message: "Invalid token" });
+    }
+    res.status(500).json({ message: "Failed to authenticate token" });
+  }
+};
+
 // Function used to create new user
 export const createUser = async (req, res) => {
   try {
