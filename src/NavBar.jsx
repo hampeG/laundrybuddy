@@ -2,7 +2,7 @@ import React from 'react';
 import { Navbar, Nav, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faAddressBook, faCalendarAlt , faInfoCircle, faUser,faSignInAlt } from '@fortawesome/free-solid-svg-icons';
-import './App.css';
+import './NavBar.css';
 
 const NavBar = () => {
   return (
