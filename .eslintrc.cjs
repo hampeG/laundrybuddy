@@ -13,6 +13,9 @@ module.exports = {
   plugins: ["react-refresh"],
   rules: {
     "react/jsx-no-target-blank": "off",
+    "react/jsx-uses-react": "off",
+    "react/react-in-jsx-scope": "off",
+    "no-unused-vars": ["warn", { "vars": "all", "varsIgnorePattern": "React|faUser" }],
     "react-refresh/only-export-components": [
       "warn",
       { allowConstantExport: true },
