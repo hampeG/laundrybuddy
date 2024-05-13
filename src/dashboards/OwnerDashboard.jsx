@@ -1,7 +1,6 @@
 import React from 'react';
-import ManageSlots from './components/ManageSlots';
-import UserManagement from './components/UserManagement';
-import ViewAnalytics from './components/ViewAnalytics';
+import ManageSlots from '../components/ManageSlots.jsx';
+import UserManagement from '../components/UserManagement.jsx';
 
 const OwnerDashboard = () => {
   return (
@@ -9,7 +8,6 @@ const OwnerDashboard = () => {
       <h1>Owner Dashboard</h1>
       <ManageSlots />
       <UserManagement />
-      <ViewAnalytics />
     </div>
   );
 };
