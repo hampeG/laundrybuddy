@@ -6,11 +6,13 @@ import NavBar from "./NavBar.jsx";
 import RegistrationForm from "./RegistrationForm.jsx";
 import LoginForm from "./LoginForm.jsx"
 import MainPage from "./MainPage.jsx";
-import OwnerDashboard from "./dashboards/OwnerDashboard.jsx"
+import OwnerDashboard from "./dashboards/OwnerDashboard.jsx";
+import { AuthProvider } from "./context/AuthContext";
 
 function App() {
   return (
     <Router>
+      <AuthProvider>
       <NavBar/>
       <Routes>
         <Route path="/" element={<MainPage/>} />
@@ -21,6 +23,7 @@ function App() {
         <Route path="/contact" element={<ContactForm />} />
         <Route path="/register" element={<RegistrationForm />} />
       </Routes>
+      </AuthProvider>
     </Router>
   );
 }
