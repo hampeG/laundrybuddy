@@ -1,9 +1,16 @@
 .custom-navbar {
     background-color: #0EBB9C !important;
-    height: 100px; 
+    height: 100px;
 }
 
+body {
+  padding-top: 100px !important;
+}
 
+.link {
+  text-decoration: none;
+  color: #FFF;
+}
 .navbar-brand {
     margin-left: 50px;
     

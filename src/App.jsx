@@ -10,15 +10,16 @@ import MainPage from "./MainPage.jsx";
 function App() {
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/book/:slotId" element={<Booking />} />
-      </Routes>
-      <ContactForm />
-      <RegistrationForm />
       <NavBar/>
-      <LoginForm />
-      <MainPage/>
+      <Routes>
+        <Route path="/" element={<MainPage/>} />
+        <Route path="/book" element={<Home />} />
+        <Route path="/book/:slotId" element={<Booking />} />
+        <Route path="/login" element={<LoginForm />} />
+        <Route path="/register" element={<RegistrationForm />} />
+        <Route path="/contact" element={<ContactForm />} />
+        <Route path="/register" element={<RegistrationForm />} />
+      </Routes>
     </Router>
   );
 }

@@ -18,6 +18,7 @@ function RegistrationForm() {
       ...prevData,
       [name]: value
     }));
+    console.log("formData:", formData);
   }
 
   // Event handler for form submission
