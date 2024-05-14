@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './ContactForm.css';
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -37,28 +38,31 @@ const ContactForm = () => {
   };
 
   return (
-    <div>
-      <h2>Contact Form</h2>
+    <div className='body'>
+      <img 
+                src="src/images/lb-logo-sq 1.png"
+                alt="Laundry Buddy Logo"
+                className="Logo"
+            />
       <form onSubmit={handleSubmit}>
         <div>
-          <label>First Name:</label>
-          <input type="text" name="first_name" value={formData.first_name} onChange={handleChange} required />
+          <input type="text" name="first_name" value={formData.first_name} onChange={handleChange} placeholder="First Name" required />
         </div>
         <div>
-          <label>Last Name:</label>
-          <input type="text" name="last_name" value={formData.last_name} onChange={handleChange} required />
+          
+          <input type="text" name="last_name" value={formData.last_name} onChange={handleChange} placeholder="Last Name" required />
         </div>
         <div>
-          <label>Email:</label>
-          <input type="email" name="email" value={formData.email} onChange={handleChange} required />
+          
+          <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Email" required />
         </div>
         <div>
-          <label>Phone Number:</label>
-          <input type="text" name="phone_number" value={formData.phone_number} onChange={handleChange} required />
+          
+          <input type="text" name="phone_number" value={formData.phone_number} onChange={handleChange} placeholder="Phone Number"  required />
         </div>
         <div>
-          <label>Message:</label>
-          <textarea name="message" value={formData.message} onChange={handleChange} required />
+        
+          <textarea name="message" value={formData.message} onChange={handleChange} placeholder="Message" required />
         </div>
         <button type="submit">Submit</button>
       </form>
