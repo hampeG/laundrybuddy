@@ -6,6 +6,7 @@ import NavBar from "./NavBar.jsx";
 import RegistrationForm from "./RegistrationForm.jsx";
 import LoginForm from "./LoginForm.jsx"
 import MainPage from "./MainPage.jsx";
+import Footer from "./footer.jsx";
 import OwnerDashboard from "./dashboards/OwnerDashboard.jsx";
 import { AuthProvider } from "./context/AuthContext";
 
@@ -23,6 +24,7 @@ function App() {
         <Route path="/contact" element={<ContactForm />} />
         <Route path="/register" element={<RegistrationForm />} />
       </Routes>
+      <Footer/>
       </AuthProvider>
     </Router>
   );

@@ -1,0 +1,28 @@
+.footer {
+    background-color: #FFD02C;
+    height: 40px;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    z-index: 999;
+}
+
+.social-icons {
+    font-size: 24px;
+    display: flex;
+    justify-content: flex-end; 
+}
+
+.icon {
+    color: #fff;
+    margin-left: 10px; 
+    text-decoration: none;
+}
+
+.icon:first-child {
+    margin-left: 0; 
+}
+
+.icon:hover {
+    color: #ccc;
+}
