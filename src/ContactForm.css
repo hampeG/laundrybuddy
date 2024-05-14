@@ -1,22 +1,9 @@
 body {
     background: linear-gradient(to bottom, rgba(169, 169, 169, 1), rgba(14, 187, 156, 1) 100%);
-    background-size: 100% 200%;
-    animation: gradientMovement 5s linear infinite; 
-    height: 120vh; 
     font-family: Arial, sans-serif !important;
-    margin: 0;
+    
 }
-@keyframes gradientMovement {
-    0% {
-        background-position: 0 0; 
-    }
-    50% {
-        background-position: 0 100%; 
-    }
-    100% {
-        background-position: 0 0; 
-    }
-}
+
 
 
 .body {
@@ -32,7 +19,7 @@ body {
     padding: 20px;
     max-width: 500px;
     width: 90%;
-    height: 550px;
+    height: 555px;
 }
 
 
@@ -144,6 +131,7 @@ button[type="submit"]:hover {
     color: #ffffff; 
     cursor: pointer;
     margin: 0 5px; 
+    margin-bottom: 50px;
 
   }
 
