@@ -1,6 +1,6 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 // Create the context
 const AuthContext = createContext(null);
@@ -14,7 +14,7 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
-    const history = useHistory();  // Using useHistory for redirection within React Router
+    const navigateTo = useNavigate();  // Using useNavigate for redirection within React Router
 
     // Function to log in a user
     const login = async (email, password) => {
@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }) => {
                 localStorage.setItem('token', data.token);  // Store the token in localStorage
                 setUser({ email, role: data.role });  // Simplified user object
                 setLoading(false);
-                history.push('/dashboard');  // Redirect to a dashboard route after login
+                navigateTo('/dashboard');  // Redirect to a dashboard route after login
             }
         } catch (error) {
             console.error('Login failed:', error);
@@ -40,7 +40,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem('token');  // Clear the token from localStorage
         setUser(null);
         setLoading(false);
-        history.push('/login');  // Redirect to the login page after logout
+        navigateTo('/login');  // Redirect to the login page after logout
     };
 
     // Effect to check session on component mount
