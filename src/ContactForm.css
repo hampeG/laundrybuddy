@@ -1,7 +1,21 @@
 body {
-    background-color: #0EBB9C !important;
+    background: linear-gradient(to bottom, rgba(169, 169, 169, 1), rgba(14, 187, 156, 1) 100%);
+    background-size: 100% 200%;
+    animation: gradientMovement 5s linear infinite; 
+    height: 100vh; 
     font-family: Arial, sans-serif !important;
     margin: 0;
+}
+@keyframes gradientMovement {
+    0% {
+        background-position: 0 0; 
+    }
+    50% {
+        background-position: 0 100%; 
+    }
+    100% {
+        background-position: 0 0; 
+    }
 }
 
 
@@ -13,20 +27,21 @@ body {
     background-color: #ffffff !important;
     font-family: Arial, sans-serif !important;
     border-radius: 20px;
-    margin: auto; /* Center horizontally */
+    margin: auto; 
+    margin-top: 140px;
     margin-bottom: 50px;
     padding: 20px;
     max-width: 500px;
     width: 90%;
-    height: 400px;
+    height: 500px;
 }
 
 
 
 .Logo {
-    width: 50px; /* Adjust logo size */
-    height: 50px; /* Adjust logo size */
-    margin-bottom: 10px; /* Adjust margin */
+    width: 70px; 
+    height: 70px; 
+    margin-bottom: 10px; 
 }
 
 form {
@@ -49,8 +64,8 @@ textarea {
     border: 1px solid #ddd;
     border-radius: 5px;
     color: #555;
-    background-color: #f4f4f4; /* Grey background */
-    font-size: 14px; /* Adjust font size */
+    background-color: #f4f4f4; 
+    font-size: 14px; 
 }
 
 
@@ -104,6 +119,7 @@ button[type="submit"]:hover {
     button[type="submit"] {
         padding: 6px 12px;
         font-size: 12px;
+        margin-left: 45px;
     }
 }
 
