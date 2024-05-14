@@ -7,6 +7,7 @@ import RegistrationForm from "./RegistrationForm.jsx";
 import LoginForm from "./LoginForm.jsx"
 import MainPage from "./MainPage.jsx";
 import OwnerDashboard from "./dashboards/OwnerDashboard.jsx"
+import Footer from "./footer.jsx";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
       <LoginForm />
       <MainPage/>
       <OwnerDashboard/>
+      <Footer/>
     </Router>
   );
 }
