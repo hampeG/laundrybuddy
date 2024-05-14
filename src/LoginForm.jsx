@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 function LoginForm() {
   const [formData, setFormData] = useState({
@@ -56,7 +57,7 @@ function LoginForm() {
           <input type="password" placeholder="Password" id="loginPassword" name="password" autoComplete="off" value={formData.password} onChange={handleChange} required />
         </div>
         <button type="submit">Login</button>
-        <p>Not a member? Create account here</p>
+        <p><Link to="/register">Not a member? Create account here</Link></p>
       </form>
     </div>
   );
