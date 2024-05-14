@@ -7,7 +7,7 @@ const MainPage = () => {
     const { user } = useAuth(); // Getting the user from AuthContext
 
     return (
-        <Container className="mainContainer">
+        <Container fluid className="mainContainer">
             <div className="content">
             <h2>Book Your Laundry Time </h2>
                     <h1>Right On Your Device.</h1>
