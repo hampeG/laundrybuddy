@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getSlotById, bookSlot } from "./services/api";
 import { Container, Row, Col, Card, Button, Alert } from "react-bootstrap";
-import { user } from "./context/AuthContext";
+import { useAuth } from "./context/AuthContext";
 
 function Booking() {
   const { slotId } = useParams();
@@ -10,6 +10,7 @@ function Booking() {
   const [error, setError] = useState(null);
   const [confirmation, setConfirmation] = useState(null);
   const navigate = useNavigate(); // Ensure `navigate` is used
+  const user = useAuth();
 
   useEffect(() => {
     getSlotById(slotId)
