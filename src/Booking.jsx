@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getSlotById, bookSlot } from "./services/api";
 import { Container, Row, Col, Card, Button, Alert } from "react-bootstrap";
+import { user } from "./context/AuthContext";
 
 function Booking() {
   const { slotId } = useParams();
@@ -22,7 +23,7 @@ function Booking() {
   const handleBooking = () => {
     if (slot) {
       const bookingData = {
-        user_id: "663debb357bf28800a28eeda", // Replace with an actual user ID
+        user_id: user.user_id, // Replace with an actual user ID
         slot_id: slot._id,
         bookingDate: slot.date,
       };
