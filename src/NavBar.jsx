@@ -17,6 +17,35 @@ const NavBar = () => {
     navigate("/"); // Redirect to the login page after logout
   };
 
+  const handleBookClick = () => {
+    const redirectPath = '/book';
+    if (user) {
+      navigate(redirectPath);
+    } else {
+      navigate('/login', { state: { redirectPath } });
+    }
+  };
+
+  const handleSignInClick = () => {
+    const sendToDashboard = true;
+    navigate('/login', { state: { sendToDashboard } });
+  };
+
+  const handleHomeClick = () => {
+    if (user) {
+      // Redirect to the appropriate dashboard based on user role
+      if (user.role === 'Owner') {
+        navigate('/owner');
+      } else if (user.role === 'Admin') {
+        navigate('/admin');
+      } else {
+        navigate('/user');
+      }
+    } else {
+      navigate('/');
+    }
+  };
+
   return (
     <Navbar expand="lg" fixed="top" className="custom-navbar">
       <Navbar.Brand href="#">
@@ -31,21 +60,11 @@ const NavBar = () => {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav" className="justify-content-center">
         <Nav className="navbar-nav">
-          <Nav.Link href="#" className="nav-link">
-            <Link to="/" className="link">
-              <FontAwesomeIcon icon={faHome} /> Main
-            </Link>
+          <Nav.Link href="#" className="nav-link" onClick={handleHomeClick}>
+            <FontAwesomeIcon icon={faHome} /> Home
           </Nav.Link>
-          <Nav.Link href="#" className="nav-link">
-            {user ? (
-              <Link to="/book" className="link">
-                <FontAwesomeIcon icon={faCalendarAlt} /> Booking
-              </Link>
-            ) : (
-              <Link to="/login" className="link">
-                <FontAwesomeIcon icon={faCalendarAlt} /> Booking
-              </Link>
-            )}
+          <Nav.Link href="#" className="nav-link" onClick={handleBookClick}>
+            <FontAwesomeIcon icon={faCalendarAlt} /> Booking
           </Nav.Link>
           <Nav.Link href="#" className="nav-link">
             <FontAwesomeIcon icon={faInfoCircle} />
@@ -67,10 +86,14 @@ const NavBar = () => {
               <FontAwesomeIcon icon={faSignInAlt} /> Logout
             </Button>
           ) : (
-            <Button variant="light" className="navbar-btn">
+            <Button
+              variant="light"
+              className="navbar-btn"
+              onClick={handleSignInClick}
+            >
               <FontAwesomeIcon icon={faSignInAlt} />
               <Link to="/login" className="link">
-                Login/Register
+                Sign in
               </Link>
             </Button>
           )}

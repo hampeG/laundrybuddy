@@ -1,11 +1,15 @@
 import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "./context/AuthContext";
-import { Link } from "react-router-dom";
 import './ContactForm.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 
 function LoginForm() {
+  const location = useLocation();
+  const redirectPath = location.state?.redirectPath || "/";
+  const sendToDashboard = location.state?.sendToDashboard || false;
+
   const [formData, setFormData] = useState({
     email: "",
     password: ""
@@ -32,7 +36,7 @@ function LoginForm() {
     setErrorMessage("");
 
     try {
-      await login(formData.email, formData.password);
+      await login(formData.email, formData.password, redirectPath, sendToDashboard);
     } catch (error) {
       setErrorMessage("Login failed. Please check your credentials and try again.");
     }

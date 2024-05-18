@@ -1,7 +1,7 @@
 import React from 'react';
-import BookSlot from './components/BookSlot';
-import ViewSlots from './components/ViewSlots';
-import CancelBooking from './components/CancelBooking';
+import BookSlot from '../components/BookSlot';
+import ViewSlots from '../components/ViewSlots';
+import CancelBooking from '../components/CancelBooking';
 
 const UserDashboard = () => {
   return (
