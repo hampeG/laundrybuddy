@@ -37,6 +37,22 @@ body {
   height: 455px;
 }
 
+.body2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff !important;
+  font-family: Arial, sans-serif !important;
+  border-radius: 20px;
+  margin: auto; 
+  margin-top: 20px;
+  padding: 20px;
+  max-width: 500px;
+  width: 90%;
+  height: 455px;
+}
+
 .register-link {
   text-align: center;
   margin-top: 40px; /* Adjust the value as needed */
@@ -64,16 +80,6 @@ form div {
 }
 
 input[type="text"],
-input[type="email"],
-textarea {
-    width: calc(100% - 22px);
-    padding: 8px; 
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    color: #555;
-    background-color: #f4f4f4; 
-    font-size: 14px; 
-}
 input[type="password"],
 input[type="email"],
 textarea {
@@ -85,8 +91,6 @@ textarea {
     background-color: #f4f4f4; 
     font-size: 14px; 
 }
-
-
 
 .button-container {
     display: flex;

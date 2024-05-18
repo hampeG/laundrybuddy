@@ -3,7 +3,7 @@ import { useAuth } from "./context/AuthContext";
 import { Link } from "react-router-dom";
 import './ContactForm.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAddressBook, faSignInAlt } from '@fortawesome/free-solid-svg-icons';
+import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 
 function LoginForm() {
   const [formData, setFormData] = useState({
