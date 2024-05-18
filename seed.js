@@ -1,87 +1,52 @@
 import mongoose from "mongoose";
-import Booking from "./models/bookings.js";
 import Slot from "./models/slots.js";
-import User from "./models/users.js";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+const uri = process.env.CONNECTION_STRING;
 
 async function seedDatabase() {
   try {
-    await mongoose.connect(
-      "mongodb+srv://hampusgunnarsson:mongo@laundrybuddy.qonx94l.mongodb.net/laundrybuddy?retryWrites=true&w=majority",
-      {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      }
-    );
+    await mongoose.connect(uri);
 
     // Clear existing collections
-    await Booking.deleteMany({});
     await Slot.deleteMany({});
-    await User.deleteMany({});
 
-    // Insert initial users
-    const users = await User.insertMany([
-      {
-        first_name: "John",
-        last_name: "Doe",
-        email: "john.doe@example.com",
-        phone_number: "123-456-7890",
-        apartment_number: "101",
-        role: "Tenant",
-        bookingCredit: 1,
-      },
-      {
-        first_name: "Jane",
-        last_name: "Smith",
-        email: "jane.smith@example.com",
-        phone_number: "123-456-7891",
-        apartment_number: "102",
-        role: "Tenant",
-        bookingCredit: 1,
-      },
-      {
-        first_name: "Admin",
-        last_name: "User",
-        email: "admin@example.com",
-        phone_number: "123-456-7892",
-        apartment_number: "201",
-        role: "Admin",
-        bookingCredit: 5,
-      },
-    ]);
+    // Generate slots for the next 60 days starting from May 28, 2024
+    const startDate = new Date("2024-05-28");
+    const numberOfDays = 60;
+    const slots = [];
 
-    // Insert initial slots
-    const slots = await Slot.insertMany([
-      {
-        date: new Date("2024-05-08"),
-        time: "10:00 AM",
-        availability: true,
-      },
-      {
-        date: new Date("2024-05-08"),
-        time: "11:00 AM",
-        availability: true,
-      },
-      {
-        date: new Date("2024-05-08"),
-        time: "12:00 PM",
-        availability: false,
-      },
-    ]);
+    for (let i = 0; i < numberOfDays; i++) {
+      const currentDate = new Date(startDate);
+      currentDate.setDate(currentDate.getDate() + i);
 
-    // Insert initial bookings
-    // eslint-disable-next-line no-unused-vars
-    const bookings = await Booking.insertMany([
-      {
-        user_id: users[0]._id,
-        slot_id: slots[2]._id,
-        status: "Booked",
-        bookingDate: slots[2].date,
-      },
-    ]);
+      slots.push(
+        {
+          date: new Date(currentDate),
+          time: "08:00 AM",
+          availability: true,
+        },
+        {
+          date: new Date(currentDate),
+          time: "12:00 PM",
+          availability: true,
+        },
+        {
+          date: new Date(currentDate),
+          time: "04:00 PM",
+          availability: true,
+        }
+      );
+    }
 
-    console.log("Initial data inserted successfully");
+    // Insert generated slots
+    await Slot.insertMany(slots);
+
+    console.log("Slots inserted successfully");
   } catch (error) {
-    console.error("Error inserting initial data:", error);
+    console.error("Error inserting slots:", error);
   } finally {
     await mongoose.disconnect();
   }

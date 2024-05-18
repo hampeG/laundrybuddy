@@ -10,22 +10,33 @@ export const fetchSlots = async () => {
   }
 };
 
+// Get slot by ID with error handling
 export const getSlotById = async (slotId) => {
   try {
     const response = await axios.get(`/api/slots/${slotId}`);
-    return response;
+    return response.data;
   } catch (error) {
-    console.error("Error fetching slot by ID:", error);
-    throw error;
+    console.error(`Error fetching slot with ID ${slotId}:`, error.response || error.message);
+    throw new Error("Error fetching slot details. Please try again later.");
   }
 };
 
-export const bookSlot = async (bookingData) => {
+// Book a slot with error handling
+export const bookSlot = async (bookingData, token) => {
   try {
-    const response = await axios.post("/api/bookings", bookingData);
-    return response;
+    const response = await axios.post("/api/bookings", bookingData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+    return response.data;
   } catch (error) {
-    console.error("Error booking slot:", error);
-    throw error;
+    console.error("Error booking slot:", error.response || error.message);
+    throw new Error(
+      error.response && error.response.data && error.response.data.message
+        ? error.response.data.message
+        : "Error booking slot. Please try again later."
+    );
   }
 };

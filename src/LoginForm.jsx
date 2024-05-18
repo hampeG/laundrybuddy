@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useAuth } from "./context/AuthContext";
 import { Link } from "react-router-dom";
 
 function LoginForm() {
@@ -8,6 +9,7 @@ function LoginForm() {
   });
 
   const [errorMessage, setErrorMessage] = useState("");
+  const { login } = useAuth();
 
   // Event handler for input changes
   function handleChange(e) {
@@ -21,27 +23,12 @@ function LoginForm() {
   // Event handler for form submission
   async function handleSubmit(e) {
     e.preventDefault();
-
     setErrorMessage("");
-    try {
-      const response = await fetch("/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData)
-      });
 
-      if (response.ok) {
-        const { token } = await response.json();
-        // Stores token in the browsers local storage
-        localStorage.setItem("token", token);
-        // Redirect user to main page
-        window.location.replace("/");
-      } else {
-        const data = await response.json();
-        setErrorMessage(data.message);
-      }
+    try {
+      await login(formData.email, formData.password);
     } catch (error) {
-      console.error(`Error submitting form: ${error}`);
+      setErrorMessage("Login failed. Please check your credentials and try again.");
     }
   }
 
