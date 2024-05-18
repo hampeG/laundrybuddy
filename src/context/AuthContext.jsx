@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate(); // Using useNavigate for redirection within React Router
 
   // Function to log in a user
-  const login = async (email, password) => {
+  const login = async (email, password, redirectPath) => {
     setLoading(true);
     try {
       const response = await axios.post("/api/login", { email, password });
@@ -25,7 +25,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem("authToken", token); // Store the token in localStorage
         setUser({ _id, email, role }); // Simplified user object with user ID
         setLoading(false);
-        navigate("/"); // Redirect to a home route after login
+        navigate(redirectPath); // Redirect to a home route after login
       }
     } catch (error) {
       console.error("Login failed:", error);

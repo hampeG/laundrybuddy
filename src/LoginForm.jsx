@@ -1,10 +1,6 @@
 import { useState } from "react";
-<<<<<<< HEAD
 import { Link, useLocation } from "react-router-dom";
-=======
 import { useAuth } from "./context/AuthContext";
-import { Link } from "react-router-dom";
->>>>>>> main
 
 function LoginForm() {
   const location = useLocation();
@@ -33,7 +29,7 @@ function LoginForm() {
     setErrorMessage("");
 
     try {
-      await login(formData.email, formData.password);
+      await login(formData.email, formData.password, redirectPath);
     } catch (error) {
       setErrorMessage("Login failed. Please check your credentials and try again.");
     }

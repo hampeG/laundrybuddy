@@ -46,26 +46,8 @@ const NavBar = () => {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav" className="justify-content-center">
         <Nav className="navbar-nav">
-<<<<<<< HEAD
           <Nav.Link href="#" className="nav-link"><Link to="/" className="link"><FontAwesomeIcon icon={faHome} />   Main</Link></Nav.Link>
           <Nav.Link href="#" className="nav-link" onClick={handleBookClick}><FontAwesomeIcon icon={faCalendarAlt} />   Booking
-=======
-          <Nav.Link href="#" className="nav-link">
-            <Link to="/" className="link">
-              <FontAwesomeIcon icon={faHome} /> Main
-            </Link>
-          </Nav.Link>
-          <Nav.Link href="#" className="nav-link">
-            {user ? (
-              <Link to="/book" className="link">
-                <FontAwesomeIcon icon={faCalendarAlt} /> Booking
-              </Link>
-            ) : (
-              <Link to="/login" className="link">
-                <FontAwesomeIcon icon={faCalendarAlt} /> Booking
-              </Link>
-            )}
->>>>>>> main
           </Nav.Link>
           <Nav.Link href="#" className="nav-link">
             <FontAwesomeIcon icon={faInfoCircle} />
