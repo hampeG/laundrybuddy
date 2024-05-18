@@ -4,23 +4,34 @@ import BookingService from "../services/BookingService.js";
 // Function to create a new booking
 export const createBooking = async (req, res) => {
   try {
-    const { user_id, slot_id, bookingDate } = req.body;
+    const { userId, slotId, bookingDate } = req.body;
 
-    if (!user_id || !slot_id || !bookingDate) {
+    console.log("Received booking request:", req.body); // Log the request payload
+
+    if (!userId || !slotId || !bookingDate) {
       return res.status(400).json({ message: "Missing required fields" });
     }
 
+    // Validate bookingDate format (optional)
+    if (isNaN(Date.parse(bookingDate))) {
+      return res.status(400).json({ message: "Invalid bookingDate format" });
+    }
+
+    // Create a new booking using the BookingService
     const newBooking = await BookingService.createBooking(
-      user_id,
-      slot_id,
-      bookingDate
+      userId,
+      slotId,
+      new Date(bookingDate) // Ensure bookingDate is a Date object
     );
+
     res.status(201).json({ message: "Booking confirmed", booking: newBooking });
   } catch (error) {
+    // Log the error for debugging purposes
+    console.error("Error creating booking:", error);
+
     res.status(400).json({ message: error.message });
   }
 };
-
 // Function to retrieve all bookings
 export const getAllBookings = async (req, res) => {
   try {
@@ -77,6 +88,16 @@ export const deleteBookingById = async (req, res) => {
       message: "Booking canceled successfully",
       booking: canceledBooking,
     });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const getUserBookings = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const bookings = await Booking.find({ user_id: userId, status: 'Booked' }).populate('slot_id');
+    res.status(200).json(bookings);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

@@ -1,56 +1,72 @@
 import Booking from "../models/bookings.js";
 import User from "../models/users.js";
 import Slot from "../models/slots.js";
+import mongoose from "mongoose";
 
 class BookingService {
   static async createBooking(userId, slotId, bookingDate) {
-    // Validate the user
-    const user = await User.findById(userId);
-    if (!user) throw new Error("User not found");
-    if (user.bookingCredit <= 0)
-      throw new Error("No booking credits available");
+    const session = await mongoose.startSession();
+    session.startTransaction();
+    try {
+      // Validate the user
+      const user = await User.findById(userId).session(session);
+      if (!user) throw new Error("User not found");
+      if (user.bookingCredit <= 0)
+        throw new Error("No booking credits available");
 
-    // Validate the slot
-    const slot = await Slot.findById(slotId);
-    if (!slot) throw new Error("Slot not found");
-    if (!slot.availability) throw new Error("Slot is not available");
+      // Validate the slot
+      const slot = await Slot.findById(slotId).session(session);
+      if (!slot) throw new Error("Slot not found");
+      if (!slot.availability) throw new Error("Slot is not available");
 
-    // Check for existing active booking
-    const existingBooking = await Booking.findOne({
-      user_id: userId,
-      status: "Booked",
-    });
-    if (existingBooking) throw new Error("User already has an active booking");
+      // Check for existing active booking if the user is a tenant
+      if (user.role === "Tenant") {
+        const existingBooking = await Booking.findOne({
+          user_id: userId,
+          status: "Booked",
+        }).session(session);
+        if (existingBooking)
+          throw new Error("User already has an active booking");
+      }
 
-    // Create and save the new booking
-    const booking = new Booking({
-      user_id: userId,
-      slot_id: slotId,
-      bookingDate,
-    });
-    await booking.save();
+      // Create and save the new booking
+      const booking = new Booking({
+        user_id: userId,
+        slot_id: slotId,
+        bookingDate,
+      });
+      await booking.save({ session });
 
-    // Update user credits
-    user.bookingCredit--;
-    await user.save();
+      // Update user credits
+      user.bookingCredit--;
+      await user.save({ session });
 
-    // Update slot availability
-    slot.availability = false; // Mark slot as unavailable
-    await slot.save();
+      // Update slot availability
+      slot.availability = false; // Mark slot as unavailable
+      await slot.save({ session });
 
-    return booking;
+      await session.commitTransaction();
+      return booking;
+    } catch (error) {
+      await session.abortTransaction();
+      console.error("Error during booking creation:", error);
+      throw error;
+    } finally {
+      session.endSession();
+    }
   }
 
   static async cancelBooking(bookingId) {
-    const booking = await Booking.findById(bookingId);
+    const booking = await Booking.findById(bookingId).populate("slot_id");
     if (!booking) throw new Error("Booking not found");
 
     const currentTime = new Date();
-    const hoursDiff = (booking.bookingDate - currentTime) / (1000 * 60 * 60);
+    const slotDate = new Date(booking.slot_id.date);
+    const hoursDiff = (slotDate - currentTime) / (1000 * 60 * 60);
 
     if (hoursDiff < 24) {
       throw new Error(
-        "Cancellation must be at least 24 hours before the booking date"
+        "Cancellation must be at least 24 hours before the slot date"
       );
     }
 
@@ -61,7 +77,7 @@ class BookingService {
     user.bookingCredit++; // returning the credit if canceled
     await user.save();
 
-    const slot = await Slot.findById(booking.slot_id);
+    const slot = await Slot.findById(booking.slot_id._id);
     slot.availability = true; // Make slot available again
     await slot.save();
 

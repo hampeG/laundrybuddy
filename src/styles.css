@@ -1,0 +1,23 @@
+.booking-view {
+  font-size: 0.8rem; /* Adjust the font size as needed */
+}
+
+.booking-view .list-group-item {
+  font-size: 0.8rem;
+}
+
+.booking-view .card-header {
+  font-size: 0.75rem;
+}
+
+.booking-view .card-body {
+  font-size: 0.8rem;
+}
+
+.booking-view .alert {
+  font-size: 0.8rem;
+}
+
+.booking-view .btn {
+  font-size: 0.8rem;
+}

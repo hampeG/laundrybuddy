@@ -1,49 +1,65 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getSlotById, bookSlot } from "./services/api";
 import { Container, Row, Col, Card, Button, Alert } from "react-bootstrap";
 import { useAuth } from "./context/AuthContext";
+import PropTypes from "prop-types";
 
 function Booking() {
   const { slotId } = useParams();
   const [slot, setSlot] = useState(null);
   const [error, setError] = useState(null);
   const [confirmation, setConfirmation] = useState(null);
-  const navigate = useNavigate(); // Ensure `navigate` is used
-  const user = useAuth();
+  const navigate = useNavigate();
+  const { user } = useAuth();
 
   useEffect(() => {
-    getSlotById(slotId)
-      .then((response) => setSlot(response.data))
-      .catch((error) => {
-        console.error("Error fetching slot details:", error);
-        setError("Error fetching slot details.");
-      });
+    if (slotId) {
+      getSlotById(slotId)
+        .then((data) => setSlot(data))
+        .catch((error) => {
+          console.error("Error fetching slot details:", error);
+          setError(error.message);
+        });
+    }
   }, [slotId]);
 
-  const handleBooking = () => {
+  const handleBooking = async () => {
+    if (!user || !user._id) {
+      setError("User not authenticated. Please log in.");
+      navigate("/login");
+      return;
+    }
+
     if (slot) {
       const bookingData = {
-        user_id: user.user_id, // Replace with an actual user ID
-        slot_id: slot._id,
+        userId: user._id,
+        slotId: slot._id,
         bookingDate: slot.date,
       };
 
-      bookSlot(bookingData)
-        .then((response) => {
-          setConfirmation(response.data.message);
-          setError(null);
+      console.log("Booking data being sent:", bookingData);
 
-          // Redirect to the home page after 2 seconds
-          setTimeout(() => {
-            navigate("/");
-          }, 2000);
-        })
-        .catch((error) => {
-          console.error("Error booking slot:", error);
-          setConfirmation(null);
-          setError("Booking failed!");
-        });
+      try {
+        const token = localStorage.getItem("authToken");
+        if (!token) {
+          throw new Error("No authentication token found. Please log in.");
+        }
+
+        // eslint-disable-next-line no-unused-vars
+        const response = await bookSlot(bookingData, token);
+
+        setConfirmation("Booking confirmed!");
+        setError(null);
+
+        setTimeout(() => {
+          navigate("/");
+        }, 2000);
+      } catch (error) {
+        console.error("Error booking slot:", error);
+        setConfirmation(null);
+        setError(error.message);
+      }
     }
   };
 
@@ -77,5 +93,9 @@ function Booking() {
     </Container>
   );
 }
+
+Booking.propTypes = {
+  slotId: PropTypes.string.isRequired,
+};
 
 export default Booking;

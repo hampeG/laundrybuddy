@@ -7,30 +7,29 @@ export const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    // Check if the user exists
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(401).json({ message: "Invalid email or password" });
     }
 
-    // Check if the password is correct
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) {
-      return res.status(401).json({ message: "Invalid email or password "});
+      return res.status(401).json({ message: "Invalid email or password" });
     }
 
-    // Generate a JWT token
     const token = jwt.sign(
-      { userId: user._id, email: user.email },
+      { userId: user._id, email: user.email, role: user.role },
       process.env.JWT_SECRET,
-      { expiresIn: "1h" } // Token expires in 1 hour 
-    )
+      { expiresIn: "1h" }
+    );
 
-    res.status(200).json({ token });
+    res
+      .status(200)
+      .json({ token, _id: user._id, email: user.email, role: user.role });
   } catch (error) {
-    res.status(500).json({ message: error.message })
+    res.status(500).json({ message: error.message });
   }
-}
+};
 
 export const logoutUser = async (req, res) => {
   // Assuming client-side token management
@@ -38,8 +37,8 @@ export const logoutUser = async (req, res) => {
 };
 
 export const checkSession = async (req, res) => {
-  const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1]; // Bearer Token
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
 
   if (!token) {
     return res.status(401).json({ message: "No token provided." });
@@ -53,14 +52,13 @@ export const checkSession = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // Optionally add more checks or transformations
     const userInfo = {
-      id: user._id,
+      _id: user._id,
       email: user.email,
-      role: user.role
+      role: user.role,
     };
 
-    res.status(200).json({ message: "Session is valid", user: userInfo });
+    res.status(200).json(userInfo);
   } catch (error) {
     if (error instanceof jwt.JsonWebTokenError) {
       return res.status(403).json({ message: "Invalid token" });
@@ -72,7 +70,6 @@ export const checkSession = async (req, res) => {
 // Function used to create new user
 export const createUser = async (req, res) => {
   try {
-    
     const { first_name, last_name, email, password } = req.body;
 
     // Hash the password
@@ -88,7 +85,7 @@ export const createUser = async (req, res) => {
       first_name,
       last_name,
       email,
-      password: hashedPassword
+      password: hashedPassword,
     });
     res.status(201).json(newUser);
   } catch (error) {
@@ -108,22 +105,24 @@ export const getAllUsers = async (req, res) => {
 
 // Function used to get a user by ID
 export const getUserById = async (req, res) => {
-    const { id } = req.params;
-    try {
-      const user = await User.findById(id);
-      if (!user) {
-        return res.status(404).json({ message: "User not found" });
-      }
-      res.status(200).json(user);
-    } catch (error) {
-      res.status(500).json({ message: error.message });
+  const { id } = req.params;
+  try {
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
     }
-  };
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
 // Function used to update user by ID
 export const updateUser = async (req, res) => {
   try {
-    const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
     res.status(200).json(updatedUser);
   } catch (error) {
     res.status(400).json({ message: error.message });
