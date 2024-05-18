@@ -61,7 +61,7 @@ function RegistrationForm() {
 
   return (
     <div>
-      <div class="contact-form-container">
+      <div className="contact-form-container">
         <p className="contact-form-text">
         <FontAwesomeIcon icon={faSignInAlt} className="contact-icon" />
           Register Form
