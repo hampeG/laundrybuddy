@@ -1,8 +1,12 @@
 import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "./context/AuthContext";
-import { Link } from "react-router-dom";
 
 function LoginForm() {
+  const location = useLocation();
+  const redirectPath = location.state?.redirectPath || "/";
+  const sendToDashboard = location.state?.sendToDashboard || false;
+
   const [formData, setFormData] = useState({
     email: "",
     password: ""
@@ -26,7 +30,7 @@ function LoginForm() {
     setErrorMessage("");
 
     try {
-      await login(formData.email, formData.password);
+      await login(formData.email, formData.password, redirectPath, sendToDashboard);
     } catch (error) {
       setErrorMessage("Login failed. Please check your credentials and try again.");
     }
@@ -34,9 +38,9 @@ function LoginForm() {
 
   return (
     <div>
-      <h2>LaundryBuddy logo goes here again</h2>
       {errorMessage && <div className="error">{errorMessage}</div>}
       <form onSubmit={handleSubmit}>
+        <h2>LaundryBuddy logo goes here</h2>
         <div>
           <input type="email" placeholder="Email" id="loginEmail" name="email" autoComplete="off" value={formData.email} onChange={handleChange} required />
         </div>
