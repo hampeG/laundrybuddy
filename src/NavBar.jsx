@@ -36,6 +36,21 @@ const NavBar = () => {
     navigate('/login', { state: { sendToDashboard } });
   };
 
+  const handleHomeClick = () => {
+    if (user) {
+      // Redirect to the appropriate dashboard based on user role
+      if (user.role === 'Owner') {
+        navigate('/owner');
+      } else if (user.role === 'Admin') {
+        navigate('/admin');
+      } else {
+        navigate('/user');
+      }
+    } else {
+      navigate('/');
+    }
+  };
+
   return (
     <Navbar expand="lg" fixed="top" className="custom-navbar">
       <Navbar.Brand href="#">
@@ -50,10 +65,8 @@ const NavBar = () => {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav" className="justify-content-center">
         <Nav className="navbar-nav">
-          <Nav.Link href="#" className="nav-link">
-            <Link to="/" className="link">
-              <FontAwesomeIcon icon={faHome} /> Home
-            </Link>
+          <Nav.Link href="#" className="nav-link" onClick={handleHomeClick}>
+            <FontAwesomeIcon icon={faHome} /> Home
           </Nav.Link>
           <Nav.Link href="#" className="nav-link" onClick={handleBookClick}>
             <FontAwesomeIcon icon={faCalendarAlt} /> Booking
@@ -85,7 +98,7 @@ const NavBar = () => {
             >
               <FontAwesomeIcon icon={faSignInAlt} />
               <Link to="/login" className="link">
-                 Sign in
+                Sign in
               </Link>
             </Button>
           )}
