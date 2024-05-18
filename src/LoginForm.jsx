@@ -5,6 +5,7 @@ import { useAuth } from "./context/AuthContext";
 function LoginForm() {
   const location = useLocation();
   const redirectPath = location.state?.redirectPath || "/";
+  const sendToDashboard = location.state?.sendToDashboard || false;
 
   const [formData, setFormData] = useState({
     email: "",
@@ -29,14 +30,14 @@ function LoginForm() {
     setErrorMessage("");
 
     try {
-      await login(formData.email, formData.password, redirectPath);
+      await login(formData.email, formData.password, redirectPath, sendToDashboard);
     } catch (error) {
       setErrorMessage("Login failed. Please check your credentials and try again.");
     }
   }
 
   return (
-    <div> 
+    <div>
       {errorMessage && <div className="error">{errorMessage}</div>}
       <form onSubmit={handleSubmit}>
         <h2>LaundryBuddy logo goes here</h2>

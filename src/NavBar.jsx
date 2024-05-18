@@ -6,7 +6,6 @@ import {
   faAddressBook,
   faCalendarAlt,
   faInfoCircle,
-  faUser,
   faSignInAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import "./NavBar.css";
@@ -26,10 +25,15 @@ const NavBar = () => {
   const handleBookClick = () => {
     const redirectPath = '/book';
     if (user) {
-      navigate(redirectPath)
+      navigate(redirectPath);
     } else {
-      navigate('/login', { state: { redirectPath }});
+      navigate('/login', { state: { redirectPath } });
     }
+  };
+
+  const handleSignInClick = () => {
+    const sendToDashboard = true;
+    navigate('/login', { state: { sendToDashboard } });
   };
 
   return (
@@ -46,8 +50,13 @@ const NavBar = () => {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav" className="justify-content-center">
         <Nav className="navbar-nav">
-          <Nav.Link href="#" className="nav-link"><Link to="/" className="link"><FontAwesomeIcon icon={faHome} />   Main</Link></Nav.Link>
-          <Nav.Link href="#" className="nav-link" onClick={handleBookClick}><FontAwesomeIcon icon={faCalendarAlt} />   Booking
+          <Nav.Link href="#" className="nav-link">
+            <Link to="/" className="link">
+              <FontAwesomeIcon icon={faHome} /> Home
+            </Link>
+          </Nav.Link>
+          <Nav.Link href="#" className="nav-link" onClick={handleBookClick}>
+            <FontAwesomeIcon icon={faCalendarAlt} /> Booking
           </Nav.Link>
           <Nav.Link href="#" className="nav-link">
             <FontAwesomeIcon icon={faInfoCircle} />
@@ -69,10 +78,14 @@ const NavBar = () => {
               <FontAwesomeIcon icon={faSignInAlt} /> Logout
             </Button>
           ) : (
-            <Button variant="light" className="navbar-btn">
+            <Button
+              variant="light"
+              className="navbar-btn"
+              onClick={handleSignInClick}
+            >
               <FontAwesomeIcon icon={faSignInAlt} />
               <Link to="/login" className="link">
-                Login/Register
+                 Sign in
               </Link>
             </Button>
           )}

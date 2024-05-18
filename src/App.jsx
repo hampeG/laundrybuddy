@@ -7,6 +7,9 @@ import LoginForm from "./LoginForm.jsx";
 import MainPage from "./MainPage.jsx";
 import Footer from "./footer.jsx";
 import { AuthProvider } from "./context/AuthContext";
+import AdminDashboard from "./dashboards/AdminDashboard.jsx";
+import OwnerDashboard from "./dashboards/OwnerDashboard.jsx";
+import UserDashboard from "./dashboards/UserDashboard.jsx";
 
 function App() {
   return (
@@ -20,6 +23,9 @@ function App() {
           <Route path="/register" element={<RegistrationForm />} />
           <Route path="/contact" element={<ContactForm />} />
           <Route path="/register" element={<RegistrationForm />} />
+          <Route path="/owner" element={<OwnerDashboard />} />
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/user" element={<UserDashboard />} />
         </Routes>
         <Footer />
       </AuthProvider>

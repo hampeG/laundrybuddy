@@ -9,14 +9,14 @@ const AuthContext = createContext(null);
 // Custom hook to use the auth context
 export const useAuth = () => useContext(AuthContext);
 
-// AuthProvider component that wraps app and provides an auth object
+// AuthProvider component that wraps your app and provides an auth object
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate(); // Using useNavigate for redirection within React Router
+  const navigate = useNavigate();
 
   // Function to log in a user
-  const login = async (email, password, redirectPath) => {
+  const login = async (email, password, redirectPath, sendToDashboard) => {
     setLoading(true);
     try {
       const response = await axios.post("/api/login", { email, password });
@@ -25,7 +25,17 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem("authToken", token); // Store the token in localStorage
         setUser({ _id, email, role }); // Simplified user object with user ID
         setLoading(false);
-        navigate(redirectPath); // Redirect to a home route after login
+
+        if (sendToDashboard) {
+          if (role === 'Owner') {
+            redirectPath = '/owner';
+          } else if (role === 'Admin') {
+            redirectPath = '/admin';
+          } else if (role === 'Tenant') {
+            redirectPath = '/user';
+          }
+        }
+        navigate(redirectPath); // Redirect to the specified route after login
       }
     } catch (error) {
       console.error("Login failed:", error);
