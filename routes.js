@@ -31,6 +31,7 @@ router.get("/api/bookings", bookingController.getAllBookings);
 router.get("/api/bookings/:id", bookingController.getBookingById);
 router.put("/api/bookings/:id", bookingController.updateBookingById);
 router.delete("/api/bookings/:id", bookingController.deleteBookingById);
+router.get('/api/bookings/user/:userId', bookingController.getUserBookings);
 
 // Contact Form endpoints
 router.post("/api/contactForms", contactFormController.createContactFormEntry);
