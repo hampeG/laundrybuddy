@@ -1,7 +1,11 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 function LoginForm() {
+  const location = useLocation();
+  console.log(location) 
+  const redirectPath = location.state?.redirectPath || "/";
+
   const [formData, setFormData] = useState({
     email: "",
     password: ""
@@ -32,10 +36,10 @@ function LoginForm() {
 
       if (response.ok) {
         const { token } = await response.json();
-        // Stores token in the browsers local storage
+        // Stores token in the browser's local storage
         localStorage.setItem("token", token);
-        // Redirect user to main page
-        window.location.replace("/");
+        // Redirect user to the specified path after successful login
+        window.location.replace(redirectPath); 
       } else {
         const data = await response.json();
         setErrorMessage(data.message);
@@ -46,10 +50,10 @@ function LoginForm() {
   }
 
   return (
-    <div>
-      <h2>LaundryBuddy logo goes here again</h2>
+    <div> 
       {errorMessage && <div className="error">{errorMessage}</div>}
       <form onSubmit={handleSubmit}>
+        <h2>LaundryBuddy logo goes here</h2>
         <div>
           <input type="email" placeholder="Email" id="loginEmail" name="email" autoComplete="off" value={formData.email} onChange={handleChange} required />
         </div>
