@@ -7,9 +7,8 @@ const MainPage = () => {
     const { user } = useAuth(); // Getting the user from AuthContext
     const navigate = useNavigate();
 
-    const handleLoginClick = () => {
-        const redirectPath = "/book";
-        console.log(redirectPath);
+    const handleBookNowClick = () => {
+        const redirectPath = '/book';
         navigate('/login', { state: { redirectPath } });
     };
 
@@ -23,7 +22,7 @@ const MainPage = () => {
                         <Button className="bookButton">BOOK NOW</Button>
                     </Link>
                 ) : (
-                    <Button className="bookButton link" onClick={handleLoginClick}>BOOK NOW</Button>
+                    <Button className="bookButton link" onClick={handleBookNowClick}>BOOK NOW</Button>
                 )}
             </div>
             <img 

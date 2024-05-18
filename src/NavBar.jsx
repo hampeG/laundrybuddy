@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faAddressBook, faCalendarAlt , faInfoCircle, faUser, faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 import './NavBar.css';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from './context/AuthContext'; 
+import { useAuth } from './context/AuthContext';
 
 const NavBar = () => {
   const { user, logout } = useAuth(); 
@@ -14,6 +14,15 @@ const NavBar = () => {
   const handleLogout = () => {
     logout();  
     navigate('/');  // Redirect to the login page after logout
+  };
+
+  const handleBookClick = () => {
+    const redirectPath = '/book';
+    if (user) {
+      navigate(redirectPath)
+    } else {
+      navigate('/login', { state: { redirectPath }});
+    }
   };
 
   return (
@@ -29,12 +38,7 @@ const NavBar = () => {
       <Navbar.Collapse id="basic-navbar-nav" className="justify-content-center">
         <Nav className="navbar-nav">
           <Nav.Link href="#" className="nav-link"><Link to="/" className="link"><FontAwesomeIcon icon={faHome} />   Main</Link></Nav.Link>
-          <Nav.Link href="#" className="nav-link">
-            {user ? (
-              <Link to="/book" className="link"><FontAwesomeIcon icon={faCalendarAlt} />   Booking</Link>
-            ) : (
-              <Link to="/login" className="link"><FontAwesomeIcon icon={faCalendarAlt} />   Booking</Link>
-            )}
+          <Nav.Link href="#" className="nav-link" onClick={handleBookClick}><FontAwesomeIcon icon={faCalendarAlt} />   Booking
           </Nav.Link>
           <Nav.Link href="#" className="nav-link"><FontAwesomeIcon icon={faInfoCircle} /><Link className="link">   About</Link></Nav.Link>
           <Nav.Link href="#" className="nav-link"><Link to="/contact" className="link"><FontAwesomeIcon icon={faAddressBook} />   Contact</Link></Nav.Link>

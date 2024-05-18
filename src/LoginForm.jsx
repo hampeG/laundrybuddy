@@ -3,7 +3,6 @@ import { Link, useLocation } from "react-router-dom";
 
 function LoginForm() {
   const location = useLocation();
-  console.log(location) 
   const redirectPath = location.state?.redirectPath || "/";
 
   const [formData, setFormData] = useState({
