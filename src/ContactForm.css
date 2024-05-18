@@ -1,7 +1,7 @@
 body {
     background: linear-gradient(to bottom, rgba(169, 169, 169, 1), rgba(14, 187, 156, 1) 100%);
     font-family: Arial, sans-serif !important;
-    
+    height: 100vh;
 }
 
 
@@ -20,6 +20,42 @@ body {
     max-width: 500px;
     width: 90%;
     height: 555px;
+}
+.body1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff !important;
+  font-family: Arial, sans-serif !important;
+  border-radius: 20px;
+  margin: auto; 
+  margin-top: 20px;
+  padding: 20px;
+  max-width: 500px;
+  width: 90%;
+  height: 455px;
+}
+
+.body2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff !important;
+  font-family: Arial, sans-serif !important;
+  border-radius: 20px;
+  margin: auto; 
+  margin-top: 20px;
+  padding: 20px;
+  max-width: 500px;
+  width: 90%;
+  height: 455px;
+}
+
+.register-link {
+  text-align: center;
+  margin-top: 40px; /* Adjust the value as needed */
 }
 
 
@@ -44,6 +80,7 @@ form div {
 }
 
 input[type="text"],
+input[type="password"],
 input[type="email"],
 textarea {
     width: calc(100% - 22px);
@@ -54,8 +91,6 @@ textarea {
     background-color: #f4f4f4; 
     font-size: 14px; 
 }
-
-
 
 .button-container {
     display: flex;
