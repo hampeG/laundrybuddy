@@ -6,6 +6,7 @@ import {
   faAddressBook,
   faCalendarAlt,
   faInfoCircle,
+  faUser,
   faSignInAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import "./NavBar.css";
