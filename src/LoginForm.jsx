@@ -38,7 +38,7 @@ function LoginForm() {
         // Stores token in the browser's local storage
         localStorage.setItem("token", token);
         // Redirect user to the specified path after successful login
-        window.location.replace(redirectPath); 
+        window.location.replace(redirectPath); // Default to main page if no redirect path is provided
       } else {
         const data = await response.json();
         setErrorMessage(data.message);
