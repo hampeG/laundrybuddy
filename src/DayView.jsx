@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Button, Card, ListGroup, Alert } from "react-bootstrap";
+import { Button, ListGroup, Alert } from "react-bootstrap";
 import { filterAvailableSlots, formatDate } from "./utils";
 import "./styles.css";
 

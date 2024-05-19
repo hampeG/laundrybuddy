@@ -10,6 +10,7 @@ import {
   Row,
   Container,
 } from "react-bootstrap";
+// eslint-disable-next-line no-unused-vars
 import { filterAvailableSlots, formatDate } from "./utils";
 import "./styles.css";
 
@@ -34,16 +35,16 @@ const MonthView = ({ slots, selectedDate, handleBooking }) => {
   const renderDays = () => {
     return daysInMonth.map((day, index) => (
       <Col key={index} xs={12} sm={6} md={4} lg={2} xl={2} className="mb-3">
-        <Card>
+        <Card >
           <Card.Header>{day.toDateString()}</Card.Header>
-          <Card.Body>
+          <Card.Body className="cardPad">
             {filteredSlots.filter((slot) => isSameDay(new Date(slot.date), day))
               .length > 0 ? (
               <ListGroup>
                 {filteredSlots
                   .filter((slot) => isSameDay(new Date(slot.date), day))
                   .map((slot) => (
-                    <ListGroup.Item key={slot._id}>
+                    <ListGroup.Item className="listPad" key={slot._id}>
                       {slot.time} -{" "}
                       <Button
                         variant="primary"

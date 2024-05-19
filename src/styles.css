@@ -11,7 +11,7 @@
 }
 
 .booking-view .card-body {
-  font-size: 0.8rem;
+  font-size: 0.4rem;
 }
 
 .booking-view .alert {
@@ -19,5 +19,21 @@
 }
 
 .booking-view .btn {
-  font-size: 0.8rem;
+  font-size: 0.6rem;
+  width: 50% !important;
 }
+
+.booking-view .cardPad {
+  padding: 0.5rem;
+}
+
+.booking-view .listPad {
+  padding: 0.3rem;
+  padding-left: 0.7rem;
+}
+
+.bGroup {
+  background-color: #f2f2f2 !important;
+}
+
+

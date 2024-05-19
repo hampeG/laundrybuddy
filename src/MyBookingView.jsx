@@ -35,19 +35,33 @@ const MyBookingView = ({ bookings, handleCancelBooking }) => {
         <ListGroup>
           {bookings.map((booking) => (
             <ListGroup.Item key={booking._id}>
-              <div>
-                <strong>Date:</strong>{" "}
-                {new Date(booking.slot_id.date).toLocaleDateString()}
-              </div>
-              <div>
-                <strong>Time:</strong> {booking.slot_id.time}
-              </div>
-              <Button
-                variant="danger"
-                onClick={() => handleCancel(booking._id)}
-              >
-                Cancel Booking
-              </Button>
+              {booking.slot_id ? (
+                <>
+                  <div>
+                    <strong>Date:</strong>{" "}
+                    {new Date(booking.slot_id.date).toLocaleDateString()}
+                  </div>
+                  <div>
+                    <strong>Time:</strong> {booking.slot_id.time}
+                  </div>
+                  <Button
+                    variant="danger"
+                    onClick={() => handleCancel(booking._id)}
+                  >
+                    Cancel Booking
+                  </Button>
+                </>
+              ) : (
+                <div>
+                  <strong>This slot is no longer available.</strong>
+                  <Button
+                    variant="danger"
+                    onClick={() => handleCancel(booking._id)}
+                  >
+                    Remove Booking
+                  </Button>
+                </div>
+              )}
             </ListGroup.Item>
           ))}
         </ListGroup>
@@ -65,7 +79,7 @@ MyBookingView.propTypes = {
       slot_id: PropTypes.shape({
         date: PropTypes.string.isRequired,
         time: PropTypes.string.isRequired,
-      }).isRequired,
+      }),
     })
   ).isRequired,
   handleCancelBooking: PropTypes.func.isRequired,
