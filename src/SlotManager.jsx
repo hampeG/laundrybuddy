@@ -4,6 +4,8 @@ import DayView from "./DayView";
 import WeekView from "./WeekView";
 import MonthView from "./MonthView";
 import MyBookingView from "./MyBookingView";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "./context/AuthContext";
 import { Tabs, Tab, Container, Row, Col, Form, Alert } from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -116,63 +118,73 @@ const SlotManager = () => {
   };
 
   return (
-    <Container className="booking-view">
-      <Row>
-        <Col>
-          <h1>Slot Manager</h1>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <Form.Group controlId="datePicker">
-            <Form.Label>Select Date:</Form.Label>
-            <Form.Control
-              type="date"
-              value={selectedDate.toISOString().substring(0, 10)}
-              onChange={handleDateChange}
-            />
-          </Form.Group>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          {error && <Alert variant="danger">{error}</Alert>}
-          {successMessage && <Alert variant="success">{successMessage}</Alert>}
-          <Tabs activeKey={view} onSelect={handleSelect} className="mb-3 tabz">
-            <Tab eventKey="month" title="Month view">
-              <MonthView
-                slots={slots}
-                selectedDate={selectedDate}
-                handleBooking={handleBooking}
+    <>
+      <div className="white-band-container">
+        <div className="white-band-text">
+          <FontAwesomeIcon icon={faCalendar} className="white-band-icon" />
+          Booking Manager
+        </div>
+      </div>
+      <Container className="booking-view">
+        <Row></Row>
+        <Row>
+          <Col>
+            <Form.Group controlId="datePicker">
+              <Form.Label className="selectDate">Select Date:</Form.Label>
+              <Form.Control
+                type="date"
+                value={selectedDate.toISOString().substring(0, 10)}
+                onChange={handleDateChange}
               />
-            </Tab>
-            <Tab eventKey="week" title="Week view">
-              <WeekView
-                slots={slots}
-                selectedDate={selectedDate}
-                handleBooking={handleBooking}
-              />
-            </Tab>
-            <Tab eventKey="day" title="Day view">
-              <DayView
-                slots={slots}
-                selectedDate={selectedDate}
-                handleBooking={handleBooking}
-              />
-            </Tab>
-
-            {user && (
-              <Tab eventKey="my-bookings" title="My Bookings">
-                <MyBookingView
-                  bookings={myBookings}
-                  handleCancelBooking={fetchMyBookings}
+            </Form.Group>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            {error && <Alert variant="danger">{error}</Alert>}
+            {successMessage && (
+              <Alert variant="success">{successMessage}</Alert>
+            )}
+            <Tabs
+              activeKey={view}
+              onSelect={handleSelect}
+              className="mb-3 tabz"
+            >
+              <Tab eventKey="month" title="Month view">
+                <MonthView
+                  slots={slots}
+                  selectedDate={selectedDate}
+                  handleBooking={handleBooking}
                 />
               </Tab>
-            )}
-          </Tabs>
-        </Col>
-      </Row>
-    </Container>
+              <Tab eventKey="week" title="Week view">
+                <WeekView
+                  slots={slots}
+                  selectedDate={selectedDate}
+                  handleBooking={handleBooking}
+                />
+              </Tab>
+              <Tab eventKey="day" title="Day view">
+                <DayView
+                  slots={slots}
+                  selectedDate={selectedDate}
+                  handleBooking={handleBooking}
+                />
+              </Tab>
+
+              {user && (
+                <Tab eventKey="my-bookings" title="My Bookings">
+                  <MyBookingView
+                    bookings={myBookings}
+                    handleCancelBooking={fetchMyBookings}
+                  />
+                </Tab>
+              )}
+            </Tabs>
+          </Col>
+        </Row>
+      </Container>
+    </>
   );
 };
 

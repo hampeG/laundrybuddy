@@ -1,5 +1,8 @@
 .booking-view {
-  font-size: 0.8rem; /* Adjust the font size as needed */
+  font-size: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
 }
 
 .booking-view .list-group-item {
@@ -8,6 +11,9 @@
 
 .booking-view .card-header {
   font-size: 0.75rem;
+  flex-grow: 1 !important;
+  justify-content: center !important;
+  display: flex !important;
 }
 
 .booking-view .card-body {
@@ -19,21 +25,68 @@
 }
 
 .booking-view .btn {
-  font-size: 0.6rem;
-  width: 50% !important;
+  font-size: 0.75rem;
 }
 
 .booking-view .cardPad {
-  padding: 0.5rem;
+  padding: 0.2rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
 }
 
+.booking-view .cardPad .listPad {
+  width: 100% !important;
+  flex-grow: 1 !important;
+  justify-content: center !important;
+  justify-items: center !important;
+  display: flex !important;
+}
 .booking-view .listPad {
   padding: 0.3rem;
-  padding-left: 0.7rem;
+
+}
+
+.booking-view .cardPad .listPad .list-group-item {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  width: 100% !important;
+}
+
+.booking-view .cardPad .card-body {
+  background-color: #ff0000 !important;
 }
 
 .bGroup {
   background-color: #f2f2f2 !important;
 }
 
+.mb-3{
+  padding: 0.3rem !important;
+  margin-bottom: 3rem !important;
+}
 
+.nav-link.active {
+  color: rgb(0, 0, 0) !important;
+}
+
+.booking-view .selectDate {
+  margin-top: 10px !important;
+  font-size: 1rem !important;
+  color: white;
+}
+
+.form-control[type="date"] {
+  margin-bottom: 30px !important;
+  color: #333 !important;
+}
+
+.booking-view .dayView {
+  flex-grow: 1 !important;
+  justify-content: center !important;
+  display: flex !important;
+  margin-top: 5px !important;
+  font-size: 0.8rem !important;
+  color: white;
+}

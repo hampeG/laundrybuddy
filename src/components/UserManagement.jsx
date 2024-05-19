@@ -25,6 +25,7 @@ const UserManagement = () => {
 
   const handleDeleteUser = useCallback(
     async (userId) => {
+      console.log(`Deleting user with ID: ${userId}`); // Log the user ID
       try {
         await axios.delete(`/api/users/${userId}`);
         setUsers(users.filter((user) => user._id !== userId));
@@ -41,6 +42,7 @@ const UserManagement = () => {
 
   const handleRoleChange = useCallback(async (userId, currentRole) => {
     const newRole = currentRole === "Admin" ? "Tenant" : "Admin";
+    console.log(`Changing role for user with ID: ${userId} to ${newRole}`); // Log the user ID and new role
     try {
       await axios.put(`/api/users/${userId}`, { role: newRole });
       fetchUsers(); // Refresh the list after updating the user role
@@ -79,12 +81,13 @@ const UserManagement = () => {
           const userId = row.original._id;
           const currentRole = row.original.role;
           return (
-            <div>
+            <div key={userId}>
               {currentRole !== "Owner" && (
                 <Button
                   variant="danger"
                   onClick={() => handleDeleteUser(userId)}
                   className="me-2"
+                  key={`delete-${userId}`}
                 >
                   Delete
                 </Button>
@@ -93,6 +96,7 @@ const UserManagement = () => {
                 <Button
                   variant="primary"
                   onClick={() => handleRoleChange(userId, currentRole)}
+                  key={`make-admin-${userId}`}
                 >
                   Make Admin
                 </Button>
@@ -101,6 +105,7 @@ const UserManagement = () => {
                 <Button
                   variant="primary"
                   onClick={() => handleRoleChange(userId, currentRole)}
+                  key={`make-tenant-${userId}`}
                 >
                   Make Tenant
                 </Button>

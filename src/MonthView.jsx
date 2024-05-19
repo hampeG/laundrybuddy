@@ -35,7 +35,7 @@ const MonthView = ({ slots, selectedDate, handleBooking }) => {
   const renderDays = () => {
     return daysInMonth.map((day, index) => (
       <Col key={index} xs={12} sm={6} md={4} lg={2} xl={2} className="mb-3">
-        <Card >
+        <Card>
           <Card.Header>{day.toDateString()}</Card.Header>
           <Card.Body className="cardPad">
             {filteredSlots.filter((slot) => isSameDay(new Date(slot.date), day))
@@ -45,18 +45,18 @@ const MonthView = ({ slots, selectedDate, handleBooking }) => {
                   .filter((slot) => isSameDay(new Date(slot.date), day))
                   .map((slot) => (
                     <ListGroup.Item className="listPad" key={slot._id}>
-                      {slot.time} -{" "}
+                      
                       <Button
-                        variant="primary"
+                        variant="success"
                         onClick={() => handleBooking(slot._id)}
                       >
-                        Book
+                        {slot.time} - Book Slot
                       </Button>
                     </ListGroup.Item>
                   ))}
               </ListGroup>
             ) : (
-              <Alert variant="info">No slots.</Alert>
+              <Alert variant="danger">No slots.</Alert>
             )}
           </Card.Body>
         </Card>

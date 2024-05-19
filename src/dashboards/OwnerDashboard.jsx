@@ -1,11 +1,12 @@
-import React from 'react';
-import ManageSlots from '../components/ManageSlots.jsx';
-import UserManagement from '../components/UserManagement.jsx';
+import React from "react";
+import ManageSlots from "../components/ManageSlots.jsx";
+import UserManagement from "../components/UserManagement.jsx";
+import OwnerBand from "./OwnerBand.jsx";
 
 const OwnerDashboard = () => {
   return (
     <div>
-      <h1>Owner Dashboard</h1>
+      <OwnerBand />
       <ManageSlots />
       <UserManagement />
     </div>

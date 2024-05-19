@@ -10,6 +10,7 @@ import { AuthProvider } from "./context/AuthContext";
 import AdminDashboard from "./dashboards/AdminDashboard.jsx";
 import OwnerDashboard from "./dashboards/OwnerDashboard.jsx";
 import UserDashboard from "./dashboards/UserDashboard.jsx";
+import './App.css';
 
 function App() {
   return (

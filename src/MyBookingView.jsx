@@ -3,6 +3,7 @@ import axios from "axios";
 import { Alert, Button, ListGroup } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
+import "./MyBookingView.css";
 
 const MyBookingView = ({ bookings, handleCancelBooking }) => {
   const [error, setError] = useState(null);
@@ -32,7 +33,7 @@ const MyBookingView = ({ bookings, handleCancelBooking }) => {
       {error && <Alert variant="danger">{error}</Alert>}
       {successMessage && <Alert variant="success">{successMessage}</Alert>}
       {bookings.length > 0 ? (
-        <ListGroup>
+        <ListGroup className="mybookwidth">
           {bookings.map((booking) => (
             <ListGroup.Item key={booking._id}>
               {booking.slot_id ? (

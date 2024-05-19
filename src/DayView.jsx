@@ -16,15 +16,14 @@ const DayView = ({ slots, selectedDate, handleBooking }) => {
         <ListGroup>
           {filteredSlots.map((slot) => (
             <ListGroup.Item key={slot._id}>
-              {slot.time} -{" "}
-              <Button variant="primary" onClick={() => handleBooking(slot._id)}>
-                Book Slot
+              <Button className="dayView" variant="success" onClick={() => handleBooking(slot._id)}>
+                {slot.time} - Book Slot - Each Slot is 4 hours long
               </Button>
             </ListGroup.Item>
           ))}
         </ListGroup>
       ) : (
-        <Alert variant="info">No available slots for this day.</Alert>
+        <Alert variant="danger">No available slots for this day.</Alert>
       )}
     </div>
   );

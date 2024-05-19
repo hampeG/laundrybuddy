@@ -1,32 +1,37 @@
+/* Unique class for the navbar */
 .custom-navbar {
-  background-color: #0EBB9C !important;
+  background-color: #0ebb9c !important;
   height: 100px;
+  display: flex;
+  align-items: center;
 }
 
 body {
-padding-top: 100px !important;
+  padding-top: 100px !important;
 }
 
 .link {
-text-decoration: none;
-color: #FFF;
+  text-decoration: none;
+  color: #fff;
 }
+
 .navbar-brand {
   margin-left: 50px;
-  
 }
 
 .navbar-nav {
   flex-grow: 1;
   justify-content: center;
+  display: flex;
+  align-items: center; /* Center vertically */
 }
 
 .ml-auto {
-  margin-left: 20px; 
+  margin-left: 20px;
 }
 
 .navbar-toggler {
-  border-color: transparent; 
+  border-color: transparent;
 }
 
 .nav-link {
@@ -34,43 +39,53 @@ color: #FFF;
   font-size: 20px !important;
   justify-content: center !important;
   margin-left: 70px !important;
-  
+  display: flex;
+  align-items: center; /* Center vertically */
 }
 
 .navbar-btn {
   width: 200px !important;
   height: 43px !important;
   border-radius: 30px !important;
-  background-color: #FFD02C !important;
+  background-color: #ffd02c !important;
   color: white !important;
   font-size: 20px !important;
   font-weight: bold !important;
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
-  
+  margin-left: 20px;
+  margin-right: 30px !important;
   
 }
 
+/* Hover effect for all text and icons */
+.nav-link:hover,
+.link:hover,
+.navbar-btn:hover,
+.nav-link:hover .fa,
+.navbar-btn:hover .fa {
+  color: black !important;
+}
+
 .navbar-collapse {
-  background-color: #0EBB9C !important; 
+  background-color: #0ebb9c !important;
+  display: flex;
+  align-items: center; /* Center vertically */
 }
 
 @media (max-width: 991.98px) {
   .navbar-btn {
-    width: 200px !important; 
-    height: 40px !important; 
-    font-size: 20px !important; 
+    width: 200px !important;
+    height: 40px !important;
+    font-size: 20px !important;
     margin-left: 22px !important;
   }
 }
 
 @media (min-width: 992px) {
   .navbar-nav {
-    margin-left: auto; 
-  }
-
-  .navbar-btn {
-    margin-right: auto; 
+    margin-left: auto;
+    padding-bottom: 20px !important;
   }
 }

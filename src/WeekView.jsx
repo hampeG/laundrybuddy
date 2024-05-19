@@ -45,18 +45,17 @@ const WeekView = ({ slots, selectedDate, handleBooking }) => {
                       .filter((slot) => isSameDay(new Date(slot.date), day))
                       .map((slot) => (
                         <ListGroup.Item className="listPad" key={slot._id}>
-                          {slot.time} -{" "}
                           <Button
-                            variant="primary"
+                            variant="success"
                             onClick={() => handleBooking(slot._id)}
                           >
-                            Book
+                            {slot.time} - Book Slot
                           </Button>
                         </ListGroup.Item>
                       ))}
                   </ListGroup>
                 ) : (
-                  <Alert variant="info">No available slots for this day.</Alert>
+                  <Alert variant="danger">No available slots for this day.</Alert>
                 )}
               </Card.Body>
             </Card>
