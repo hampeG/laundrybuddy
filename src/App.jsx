@@ -5,12 +5,11 @@ import NavBar from "./NavBar.jsx";
 import RegistrationForm from "./RegistrationForm.jsx";
 import LoginForm from "./LoginForm.jsx";
 import MainPage from "./MainPage.jsx";
-import Footer from "./footer.jsx";
 import { AuthProvider } from "./context/AuthContext";
 import AdminDashboard from "./dashboards/AdminDashboard.jsx";
 import OwnerDashboard from "./dashboards/OwnerDashboard.jsx";
 import UserDashboard from "./dashboards/UserDashboard.jsx";
-import './App.css';
+import "./App.css";
 
 function App() {
   return (
@@ -28,7 +27,6 @@ function App() {
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/user" element={<UserDashboard />} />
         </Routes>
-        <Footer />
       </AuthProvider>
     </Router>
   );

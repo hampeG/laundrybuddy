@@ -1,0 +1,19 @@
+@media (max-width: 768px) {
+    .manage-feedback .table {
+      font-size: 0.9rem;
+    }
+  
+    .manage-feedback .btn {
+      font-size: 0.9rem;
+    }
+  }
+  
+  .manage-feedback .table th,
+  .manage-feedback .table td {
+    vertical-align: middle;
+  }
+  
+  .manage-feedback .modal-body .form-group {
+    margin-bottom: 1rem;
+  }
+  

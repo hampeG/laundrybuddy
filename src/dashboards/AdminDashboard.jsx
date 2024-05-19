@@ -1,15 +1,13 @@
-import React from 'react';
-import UserManagement from '../components/UserManagement';
-import ViewAnalytics from '../components/ViewAnalytics';
-import ManageFeedback from '../components/ManageFeedback';
-import AdminBand from './AdminBand';
+import React from "react";
+import AnalyticsHub from "./AnalyticsHub";
+import AdminBand from "./AdminBand";
+import ManageFeedback from "../components/ManageFeedback";
 
 const AdminDashboard = () => {
   return (
     <div>
       <AdminBand />
-      <UserManagement />
-      <ViewAnalytics />
+      <AnalyticsHub />
       <ManageFeedback />
     </div>
   );

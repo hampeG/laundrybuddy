@@ -8,6 +8,14 @@ import {
   Alert,
   ButtonGroup,
 } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCalendarAlt,
+  faClock,
+  faTrashAlt,
+  faCheckCircle,
+  faTimesCircle,
+} from "@fortawesome/free-solid-svg-icons";
 import "../../src/styles.css";
 
 const ManageSlots = () => {
@@ -99,11 +107,21 @@ const ManageSlots = () => {
   return (
     <Container>
       <h2>Create Slots</h2>
-      {message && <Alert variant="success">{message}</Alert>}
-      {error && <Alert variant="danger">{error}</Alert>}
+      {message && (
+        <Alert variant="success">
+          <FontAwesomeIcon icon={faCheckCircle} /> {message}
+        </Alert>
+      )}
+      {error && (
+        <Alert variant="danger">
+          <FontAwesomeIcon icon={faTimesCircle} /> {error}
+        </Alert>
+      )}
       <Form onSubmit={handleCreateSlot}>
-        <Form.Group controlId="formDate">
-          <Form.Label>Date</Form.Label>
+        <Form.Group controlId="formDate" className="mb-3">
+          <Form.Label>
+            <FontAwesomeIcon icon={faCalendarAlt} /> Date
+          </Form.Label>
           <Form.Control
             type="date"
             value={date}
@@ -111,8 +129,10 @@ const ManageSlots = () => {
             required
           />
         </Form.Group>
-        <Form.Group controlId="formTime">
-          <Form.Label>Time</Form.Label>
+        <Form.Group controlId="formTime" className="mb-3">
+          <Form.Label>
+            <FontAwesomeIcon icon={faClock} /> Time
+          </Form.Label>
           <Form.Control
             type="time"
             value={time}
@@ -121,11 +141,11 @@ const ManageSlots = () => {
           />
         </Form.Group>
         <Button variant="primary" type="submit">
-          Create Slot
+          <FontAwesomeIcon icon={faCheckCircle} /> Create Slot
         </Button>
       </Form>
       <div className="d-flex justify-content-between align-items-center mt-4">
-        <h3>Existing Slots</h3>
+        <h2>Existing Slots</h2>
         <ButtonGroup className="bGroup">
           <Button variant="outline-primary" onClick={() => setDisplayCount(10)}>
             10
@@ -159,7 +179,7 @@ const ManageSlots = () => {
                   variant="danger"
                   onClick={() => handleDeleteSlot(slot._id)}
                 >
-                  Delete
+                  <FontAwesomeIcon icon={faTrashAlt} /> Delete
                 </Button>
               </td>
             </tr>

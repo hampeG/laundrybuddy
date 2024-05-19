@@ -3,6 +3,13 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import { Table, Button, Container, Alert } from "react-bootstrap";
 import { useTable, useSortBy } from "react-table";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faTrashAlt,
+  faUserTie,
+  faCheckCircle,
+  faTimesCircle,
+} from "@fortawesome/free-solid-svg-icons";
 
 const UserManagement = () => {
   const [users, setUsers] = useState([]);
@@ -81,22 +88,20 @@ const UserManagement = () => {
           const userId = row.original._id;
           const currentRole = row.original.role;
           return (
-            <div key={userId}>
+            <div>
               {currentRole !== "Owner" && (
                 <Button
                   variant="danger"
                   onClick={() => handleDeleteUser(userId)}
                   className="me-2"
-                  key={`delete-${userId}`}
                 >
-                  Delete
+                  <FontAwesomeIcon icon={faTrashAlt} /> Delete
                 </Button>
               )}
               {currentRole === "Tenant" && (
                 <Button
                   variant="primary"
                   onClick={() => handleRoleChange(userId, currentRole)}
-                  key={`make-admin-${userId}`}
                 >
                   Make Admin
                 </Button>
@@ -105,7 +110,6 @@ const UserManagement = () => {
                 <Button
                   variant="primary"
                   onClick={() => handleRoleChange(userId, currentRole)}
-                  key={`make-tenant-${userId}`}
                 >
                   Make Tenant
                 </Button>
@@ -124,8 +128,16 @@ const UserManagement = () => {
   return (
     <Container>
       <h2>User Management</h2>
-      {message && <Alert variant="success">{message}</Alert>}
-      {error && <Alert variant="danger">{error}</Alert>}
+      {message && (
+        <Alert variant="success">
+          <FontAwesomeIcon icon={faCheckCircle} /> {message}
+        </Alert>
+      )}
+      {error && (
+        <Alert variant="danger">
+          <FontAwesomeIcon icon={faTimesCircle} /> {error}
+        </Alert>
+      )}
       <Table striped bordered hover {...getTableProps()} className="rounded">
         <thead>
           {headerGroups.map((headerGroup) => (
