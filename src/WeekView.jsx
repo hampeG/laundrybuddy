@@ -10,6 +10,7 @@ import {
   Row,
   Container,
 } from "react-bootstrap";
+// eslint-disable-next-line no-unused-vars
 import { filterAvailableSlots, formatDate } from "./utils";
 import "./styles.css";
 
@@ -35,7 +36,7 @@ const WeekView = ({ slots, selectedDate, handleBooking }) => {
           <Col key={day.toISOString()} className="mb-3">
             <Card>
               <Card.Header>{day.toDateString()}</Card.Header>
-              <Card.Body>
+              <Card.Body className="cardPad">
                 {filteredSlots.filter((slot) =>
                   isSameDay(new Date(slot.date), day)
                 ).length > 0 ? (
@@ -43,19 +44,18 @@ const WeekView = ({ slots, selectedDate, handleBooking }) => {
                     {filteredSlots
                       .filter((slot) => isSameDay(new Date(slot.date), day))
                       .map((slot) => (
-                        <ListGroup.Item key={slot._id}>
-                          {slot.time} -{" "}
+                        <ListGroup.Item className="listPad" key={slot._id}>
                           <Button
-                            variant="primary"
+                            variant="success"
                             onClick={() => handleBooking(slot._id)}
                           >
-                            Book Slot
+                            {slot.time} - Book Slot
                           </Button>
                         </ListGroup.Item>
                       ))}
                   </ListGroup>
                 ) : (
-                  <Alert variant="info">No available slots for this day.</Alert>
+                  <Alert variant="danger">No available slots for this day.</Alert>
                 )}
               </Card.Body>
             </Card>

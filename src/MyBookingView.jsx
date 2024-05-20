@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Alert, Button, ListGroup } from "react-bootstrap";
+import { Button, ListGroup } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
+import "./MyBookingView.css";
+import CustomAlert from "./CustomAlert"; 
 
 const MyBookingView = ({ bookings, handleCancelBooking }) => {
   const [error, setError] = useState(null);
@@ -29,25 +31,39 @@ const MyBookingView = ({ bookings, handleCancelBooking }) => {
   return (
     <div>
       <h2>My Bookings</h2>
-      {error && <Alert variant="danger">{error}</Alert>}
-      {successMessage && <Alert variant="success">{successMessage}</Alert>}
+      {error && <CustomAlert variant="danger" message={error} />}
+      {successMessage && <CustomAlert variant="success" message={successMessage} />}
       {bookings.length > 0 ? (
-        <ListGroup>
+        <ListGroup className="mybookwidth">
           {bookings.map((booking) => (
             <ListGroup.Item key={booking._id}>
-              <div>
-                <strong>Date:</strong>{" "}
-                {new Date(booking.slot_id.date).toLocaleDateString()}
-              </div>
-              <div>
-                <strong>Time:</strong> {booking.slot_id.time}
-              </div>
-              <Button
-                variant="danger"
-                onClick={() => handleCancel(booking._id)}
-              >
-                Cancel Booking
-              </Button>
+              {booking.slot_id ? (
+                <>
+                  <div>
+                    <strong>Date:</strong>{" "}
+                    {new Date(booking.slot_id.date).toLocaleDateString()}
+                  </div>
+                  <div>
+                    <strong>Time:</strong> {booking.slot_id.time}
+                  </div>
+                  <Button
+                    variant="danger"
+                    onClick={() => handleCancel(booking._id)}
+                  >
+                    Cancel Booking
+                  </Button>
+                </>
+              ) : (
+                <div>
+                  <strong>This slot is no longer available.</strong>
+                  <Button
+                    variant="danger"
+                    onClick={() => handleCancel(booking._id)}
+                  >
+                    Remove Booking
+                  </Button>
+                </div>
+              )}
             </ListGroup.Item>
           ))}
         </ListGroup>
@@ -65,7 +81,7 @@ MyBookingView.propTypes = {
       slot_id: PropTypes.shape({
         date: PropTypes.string.isRequired,
         time: PropTypes.string.isRequired,
-      }).isRequired,
+      }),
     })
   ).isRequired,
   handleCancelBooking: PropTypes.func.isRequired,

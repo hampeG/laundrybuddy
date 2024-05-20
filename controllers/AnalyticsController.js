@@ -1,33 +1,104 @@
-// Assuming you have models that you will interact with, import them
-import Booking from '../models/bookings.js';
-import ContactForm from '../models/contactForm.js';
+import Booking from "../models/bookings.js";
+import User from "../models/users.js";
+import Slot from "../models/slots.js";
 
-// Example of a simple controller function to get analytics, using ES6 features
-export const getAnalytics = async (req, res) => {
-    try {
-        // Example functions that should be defined to fetch data from your database
-        const totalBookings = await getBookingsCount();
-        const feedbackPositiveRate = await getPositiveFeedbackRate();
+// Calculate Total Bookings
+export const getTotalBookingsCount = async (req, res) => {
+  try {
+    const totalBookings = await Booking.countDocuments({
+      status: { $ne: "Canceled" },
+    });
+    res.status(200).json({ totalBookings });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
-        res.status(200).json({
-            bookings: totalBookings,
-            feedbackPositiveRate
-        });
-    } catch (error) {
-        console.error('Error fetching analytics:', error);
-        res.status(500).json({ message: 'Failed to fetch analytics' });
+export const getBookingsByUserType = async (req, res) => {
+  try {
+    const filteredBookings = await Booking.aggregate([
+      {
+        $match: {
+          status: { $ne: "Canceled" }, // Ensure this matches your field name and values
+        },
+      },
+    ]);
+
+    console.log("Filtered Bookings:", filteredBookings); // Log filtered bookings
+
+    const bookingsByUserType = await Booking.aggregate([
+      {
+        $match: {
+          status: { $ne: "Canceled" },
+        },
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "user_id",
+          foreignField: "_id",
+          as: "user_details",
+        },
+      },
+      {
+        $unwind: "$user_details",
+      },
+      {
+        $group: {
+          _id: "$user_details.role",
+          count: { $sum: 1 },
+        },
+      },
+    ]);
+
+    console.log("Bookings by User Type:", bookingsByUserType);
+    res.status(200).json({ bookingsByUserType });
+  } catch (error) {
+    console.error("Error fetching bookings by user type:", error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Calculate Slot Utilization Rate
+export const getSlotUtilizationRate = async (req, res) => {
+  try {
+    const totalSlots = await Slot.countDocuments();
+    const bookedSlots = await Booking.countDocuments({ status: "Booked" });
+
+    if (totalSlots === 0) {
+      return res.status(200).json({ utilizationRate: 0 });
     }
+
+    const utilizationRate = (bookedSlots / totalSlots) * 100;
+    res.status(200).json({ utilizationRate: utilizationRate.toFixed(2) });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
-// Hypothetical functions to fetch data
-const getBookingsCount = async () => {
-    // Implementation depends on your data structure
-    const count = await Booking.countDocuments();
-    return count;
+// Calculate Total Users
+export const getTotalUsersCount = async (req, res) => {
+  try {
+    const totalUsers = await User.countDocuments();
+    res.status(200).json({ totalUsers });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
-const getPositiveFeedbackRate = async () => {
-    const positiveFeedback = await ContactForm.countDocuments({ rating: { $gte: 4 } });
-    const totalFeedback = await ContactForm.countDocuments();
-    return totalFeedback > 0 ? (positiveFeedback / totalFeedback * 100).toFixed(2) : 0;
+// Calculate User Distribution by Role
+export const getUserDistributionByRole = async (req, res) => {
+  try {
+    const userDistribution = await User.aggregate([
+      {
+        $group: {
+          _id: "$role",
+          count: { $sum: 1 },
+        },
+      },
+    ]);
+    res.status(200).json({ userDistribution });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };

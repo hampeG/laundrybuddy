@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import Slot from "./models/slots.js";
 import dotenv from "dotenv";
+import Booking from "./models/bookings.js";
 
 dotenv.config();
 
@@ -11,42 +11,12 @@ async function seedDatabase() {
     await mongoose.connect(uri);
 
     // Clear existing collections
-    await Slot.deleteMany({});
+    await Booking.deleteMany({});
 
-    // Generate slots for the next 60 days starting from May 28, 2024
-    const startDate = new Date("2024-05-28");
-    const numberOfDays = 60;
-    const slots = [];
-
-    for (let i = 0; i < numberOfDays; i++) {
-      const currentDate = new Date(startDate);
-      currentDate.setDate(currentDate.getDate() + i);
-
-      slots.push(
-        {
-          date: new Date(currentDate),
-          time: "08:00 AM",
-          availability: true,
-        },
-        {
-          date: new Date(currentDate),
-          time: "12:00 PM",
-          availability: true,
-        },
-        {
-          date: new Date(currentDate),
-          time: "04:00 PM",
-          availability: true,
-        }
-      );
-    }
-
-    // Insert generated slots
-    await Slot.insertMany(slots);
-
-    console.log("Slots inserted successfully");
+    
+    console.log("Bookings cleared successfully");
   } catch (error) {
-    console.error("Error inserting slots:", error);
+    console.error("Error:", error);
   } finally {
     await mongoose.disconnect();
   }
