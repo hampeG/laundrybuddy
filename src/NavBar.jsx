@@ -67,10 +67,14 @@ const NavBar = () => {
       <Navbar.Collapse id="basic-navbar-nav" className="justify-content-center">
         <Nav className="navbar-nav">
           <Nav.Link href="#" className="nav-link" onClick={handleHomeClick}>
+            <Link to="/home" className="link">
             <FontAwesomeIcon icon={faHome} /> Home
+            </Link>
           </Nav.Link>
           <Nav.Link href="#" className="nav-link" onClick={handleBookClick}>
+          <Link to="/home" className="link">
             <FontAwesomeIcon icon={faCalendarAlt} /> Booking
+            </Link>
           </Nav.Link>
           <Nav.Link href="#" className="link">
             <Link to="/about" className="link">
@@ -98,9 +102,8 @@ const NavBar = () => {
               className="navbar-btn"
               onClick={handleSignInClick}
             >
-              <FontAwesomeIcon icon={faSignInAlt} />
               <Link to="/login" className="link">
-                Sign in
+              <FontAwesomeIcon icon={faSignInAlt} /> Sign In
               </Link>
             </Button>
           )}

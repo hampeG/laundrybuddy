@@ -4,8 +4,11 @@ body {
     rgba(169, 169, 169, 1),
     rgba(14, 187, 156, 1) 100%
   );
+  scroll-behavior: smooth;
+  min-height: 100vh;
+  background-attachment: fixed;
   font-family: Arial, sans-serif !important;
-  height: 100vh;
+
 }
 
 .body {

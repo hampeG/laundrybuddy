@@ -14,6 +14,10 @@ body {
   text-decoration: none;
   color: #fff;
 }
+.linkbtn {
+  text-decoration: none;
+  color: #fff;
+}
 
 .navbar-brand {
   margin-left: 50px;
@@ -41,6 +45,7 @@ body {
   margin-left: 70px !important;
   display: flex;
   align-items: center; /* Center vertically */
+  text-decoration: none;
 }
 
 .navbar-btn {
