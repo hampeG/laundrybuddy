@@ -23,13 +23,6 @@ body {
   margin-left: 50px;
 }
 
-.navbar-nav {
-  flex-grow: 1;
-  justify-content: center;
-  display: flex;
-  align-items: center; /* Center vertically */
-}
-
 .ml-auto {
   margin-left: 20px;
 }
