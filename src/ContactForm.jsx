@@ -3,6 +3,7 @@ import axios from "axios";
 import "./ContactForm.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAddressBook } from "@fortawesome/free-solid-svg-icons";
+import logo from "./images/lb-logo-sq-1.png";
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -55,11 +56,7 @@ const ContactForm = () => {
       </div>
 
       <div className="body">
-        <img
-          src="src/images/lb-logo-sq 1.png"
-          alt="Laundry Buddy Logo"
-          className="Logo"
-        />
+        <img src={logo} alt="Laundry Buddy Logo" className="Logo" />
         <form onSubmit={handleSubmit}>
           <div>
             <input

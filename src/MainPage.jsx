@@ -2,6 +2,7 @@ import { Container, Button } from "react-bootstrap";
 import "./MainPage.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "./context/AuthContext";
+import laundryHero from "./images/laundry-hero.png";
 
 const MainPage = () => {
   const { user } = useAuth(); // Getting the user from AuthContext
@@ -27,11 +28,7 @@ const MainPage = () => {
           </Button>
         )}
       </div>
-      <img
-        src="src/images/laundry-hero.png"
-        alt="Laundry Buddy"
-        className="heroImage"
-      />
+      <img src={laundryHero} alt="Laundry Buddy" className="heroImage" />
     </Container>
   );
 };

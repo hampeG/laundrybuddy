@@ -12,6 +12,7 @@ import {
 import "./NavBar.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "./context/AuthContext";
+import logo from "./images/lb-logo.png";
 
 const NavBar = () => {
   const { user, logout } = useAuth();
@@ -57,7 +58,7 @@ const NavBar = () => {
       <Navbar.Brand href="#">
         <Link to="/" className="link">
           <img
-            src="src/images/lb-logo.png"
+            src={logo}
             alt="logo"
             style={{ width: "160px", height: "53px" }}
           />
@@ -68,12 +69,12 @@ const NavBar = () => {
         <Nav className="navbar-nav">
           <Nav.Link href="#" className="nav-link" onClick={handleHomeClick}>
             <Link to="/home" className="link">
-            <FontAwesomeIcon icon={faHome} /> Home
+              <FontAwesomeIcon icon={faHome} /> Home
             </Link>
           </Nav.Link>
           <Nav.Link href="#" className="nav-link" onClick={handleBookClick}>
-          <Link to="/home" className="link">
-            <FontAwesomeIcon icon={faCalendarAlt} /> Booking
+            <Link to="/home" className="link">
+              <FontAwesomeIcon icon={faCalendarAlt} /> Booking
             </Link>
           </Nav.Link>
           <Nav.Link href="#" className="link">
@@ -103,7 +104,7 @@ const NavBar = () => {
               onClick={handleSignInClick}
             >
               <Link to="/login" className="link">
-              <FontAwesomeIcon icon={faSignInAlt} /> Sign In
+                <FontAwesomeIcon icon={faSignInAlt} /> Sign In
               </Link>
             </Button>
           )}
