@@ -8,8 +8,8 @@ import {
   Form,
   Button,
   ListGroup,
-  Alert,
 } from "react-bootstrap";
+import CustomAlert from "../CustomAlert";
 import { useAuth } from "../context/AuthContext"; // Ensure this hook provides the current user's info
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -135,8 +135,8 @@ const ManageUser = () => {
   return (
     <Container className="manage-user">
       <h2>Manage User</h2>
-      {message && <Alert variant="success">{message}</Alert>}
-      {error && <Alert variant="danger">{error}</Alert>}
+      {message && <CustomAlert variant="success">{message}</CustomAlert>}
+      {error && <CustomAlert variant="danger">{error}</CustomAlert>}
       <Row>
         <Col md={6}>
           <Card className="mb-4">

@@ -10,6 +10,7 @@ import AdminDashboard from "./dashboards/AdminDashboard.jsx";
 import OwnerDashboard from "./dashboards/OwnerDashboard.jsx";
 import UserDashboard from "./dashboards/UserDashboard.jsx";
 import "./App.css";
+import About from "./About.jsx";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/book" element={<SlotManager />} />
+          <Route path="/about" element={<About />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/register" element={<RegistrationForm />} />
           <Route path="/contact" element={<ContactForm />} />

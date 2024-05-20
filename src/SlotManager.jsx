@@ -7,9 +7,10 @@ import MyBookingView from "./MyBookingView";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "./context/AuthContext";
-import { Tabs, Tab, Container, Row, Col, Form, Alert } from "react-bootstrap";
+import { Tabs, Tab, Container, Row, Col, Form } from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router-dom";
-import "./styles.css"; // Import the custom styles
+import "./styles.css";
+import CustomAlert from "./CustomAlert";
 
 const SlotManager = () => {
   const [slots, setSlots] = useState([]);
@@ -141,9 +142,9 @@ const SlotManager = () => {
         </Row>
         <Row>
           <Col>
-            {error && <Alert variant="danger">{error}</Alert>}
+            {error && <CustomAlert variant="danger">{error}</CustomAlert>}
             {successMessage && (
-              <Alert variant="success">{successMessage}</Alert>
+              <CustomAlert variant="success">{successMessage}</CustomAlert>
             )}
             <Tabs
               activeKey={view}

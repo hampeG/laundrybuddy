@@ -1,7 +1,13 @@
 import React from "react";
 import { Navbar, Nav, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faHome,faAddressBook,faCalendarAlt,faInfoCircle,faUser,faSignInAlt,
+import {
+  faHome,
+  faAddressBook,
+  faCalendarAlt,
+  faInfoCircle,
+  faUser,
+  faSignInAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import "./NavBar.css";
 import { Link, useNavigate } from "react-router-dom";
@@ -18,31 +24,31 @@ const NavBar = () => {
   };
 
   const handleBookClick = () => {
-    const redirectPath = '/book';
+    const redirectPath = "/book";
     if (user) {
       navigate(redirectPath);
     } else {
-      navigate('/login', { state: { redirectPath } });
+      navigate("/login", { state: { redirectPath } });
     }
   };
 
   const handleSignInClick = () => {
     const sendToDashboard = true;
-    navigate('/login', { state: { sendToDashboard } });
+    navigate("/login", { state: { sendToDashboard } });
   };
 
   const handleHomeClick = () => {
     if (user) {
       // Redirect to the appropriate dashboard based on user role
-      if (user.role === 'Owner') {
-        navigate('/owner');
-      } else if (user.role === 'Admin') {
-        navigate('/admin');
+      if (user.role === "Owner") {
+        navigate("/owner");
+      } else if (user.role === "Admin") {
+        navigate("/admin");
       } else {
-        navigate('/user');
+        navigate("/user");
       }
     } else {
-      navigate('/');
+      navigate("/");
     }
   };
 
@@ -66,11 +72,12 @@ const NavBar = () => {
           <Nav.Link href="#" className="nav-link" onClick={handleBookClick}>
             <FontAwesomeIcon icon={faCalendarAlt} /> Booking
           </Nav.Link>
-          <Nav.Link href="#" className="nav-link">
-            <FontAwesomeIcon icon={faInfoCircle} />
-            <Link className="link"> About</Link>
+          <Nav.Link href="#" className="link">
+            <Link to="/about" className="link">
+              <FontAwesomeIcon icon={faInfoCircle} /> About
+            </Link>
           </Nav.Link>
-          <Nav.Link href="#" className="nav-link">
+          <Nav.Link href="#" className="link">
             <Link to="/contact" className="link">
               <FontAwesomeIcon icon={faAddressBook} /> Contact
             </Link>

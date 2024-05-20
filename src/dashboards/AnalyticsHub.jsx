@@ -65,7 +65,7 @@ const AnalyticsHub = () => {
               <Card.Title className="text-primary">
                 <FontAwesomeIcon icon={faUsers} /> Total Users
               </Card.Title>
-              <Card.Text className="display-4">{totalUsers}</Card.Text>
+              <Card.Text className="text-center display-4">{totalUsers}</Card.Text>
             </Card.Body>
           </Card>
         </Col>
@@ -78,7 +78,7 @@ const AnalyticsHub = () => {
               <Card.Title className="text-success">
                 <FontAwesomeIcon icon={faCalendarCheck} /> Active Bookings
               </Card.Title>
-              <Card.Text className="display-4">{totalBookings}</Card.Text>
+              <Card.Text className="text-center display-4">{totalBookings}</Card.Text>
             </Card.Body>
           </Card>
         </Col>
@@ -94,7 +94,7 @@ const AnalyticsHub = () => {
                 <FontAwesomeIcon icon={faUserTag} /> Distribution by Role
               </Card.Title>
               {userDistribution.map((item) => (
-                <Card.Text key={item._id}>
+                <Card.Text className="text-center" key={item._id}>
                   {item._id}: {item.count}
                 </Card.Text>
               ))}
@@ -111,7 +111,7 @@ const AnalyticsHub = () => {
                 <FontAwesomeIcon icon={faUserTag} /> Active Bookings by Role
               </Card.Title>
               {bookingsByUserType.map((item) => (
-                <Card.Text key={item._id}>
+                <Card.Text className="text-center" key={item._id}>
                   {item._id}: {item.count}
                 </Card.Text>
               ))}
@@ -129,7 +129,7 @@ const AnalyticsHub = () => {
               <Card.Title className="text-danger">
                 <FontAwesomeIcon icon={faChartLine} /> Slot Utilization Rate
               </Card.Title>
-              <Card.Text className="display-4">{utilizationRate}%</Card.Text>
+              <Card.Text className="text-center display-4">{utilizationRate}%</Card.Text>
             </Card.Body>
           </Card>
         </Col>

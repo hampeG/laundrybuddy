@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Alert, Button, ListGroup } from "react-bootstrap";
+import { Button, ListGroup } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import "./MyBookingView.css";
+import CustomAlert from "./CustomAlert"; 
 
 const MyBookingView = ({ bookings, handleCancelBooking }) => {
   const [error, setError] = useState(null);
@@ -30,8 +31,8 @@ const MyBookingView = ({ bookings, handleCancelBooking }) => {
   return (
     <div>
       <h2>My Bookings</h2>
-      {error && <Alert variant="danger">{error}</Alert>}
-      {successMessage && <Alert variant="success">{successMessage}</Alert>}
+      {error && <CustomAlert variant="danger" message={error} />}
+      {successMessage && <CustomAlert variant="success" message={successMessage} />}
       {bookings.length > 0 ? (
         <ListGroup className="mybookwidth">
           {bookings.map((booking) => (
