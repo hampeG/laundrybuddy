@@ -120,9 +120,21 @@ export const getUserById = async (req, res) => {
 // Function used to update user by ID
 export const updateUser = async (req, res) => {
   try {
-    const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {
+    const { password, ...userData } = req.body;
+
+    if (password) {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      userData.password = hashedPassword;
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(req.params.id, userData, {
       new: true,
     });
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
     res.status(200).json(updatedUser);
   } catch (error) {
     res.status(400).json({ message: error.message });

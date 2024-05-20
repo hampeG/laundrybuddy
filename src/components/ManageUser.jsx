@@ -62,22 +62,6 @@ const ManageUser = () => {
     }
   }, [user]);
 
-  useEffect(() => {
-    const fetchUserBookings = async () => {
-      try {
-        const response = await axios.get(`/api/bookings/user/${user._id}`);
-        setBookings(response.data);
-      } catch (error) {
-        console.error("Error fetching bookings:", error);
-        setError("Failed to fetch bookings");
-      }
-    };
-
-    if (user) {
-      fetchUserBookings();
-    }
-  }, [user]);
-
   const handleCancelBooking = async (bookingId) => {
     try {
       await axios.delete(`/api/bookings/${bookingId}`);
@@ -113,6 +97,7 @@ const ManageUser = () => {
       await axios.put(`/api/users/${user._id}`, { password });
       setMessage("Password changed successfully.");
       setError(null);
+      setPassword(""); // Clear the password input field
     } catch (error) {
       console.error("Error changing password:", error);
       setError("Failed to change password");
@@ -135,8 +120,8 @@ const ManageUser = () => {
   return (
     <Container className="manage-user">
       <h2>Manage User</h2>
-      {message && <CustomAlert variant="success">{message}</CustomAlert>}
-      {error && <CustomAlert variant="danger">{error}</CustomAlert>}
+      {message && <CustomAlert variant="success" message={message} />}
+      {error && <CustomAlert variant="danger" message={error} />}
       <Row>
         <Col md={6}>
           <Card className="mb-4">

@@ -14,12 +14,12 @@ import CustomAlert from "./CustomAlert";
 
 const SlotManager = () => {
   const [slots, setSlots] = useState([]);
-  const [view, setView] = useState("month"); // Default to month view
+  const [view, setView] = useState("month");
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
   const { user } = useAuth();
-  const [myBookings, setMyBookings] = useState([]); // State to store user's bookings
+  const [myBookings, setMyBookings] = useState([]);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -59,14 +59,14 @@ const SlotManager = () => {
     } else {
       fetchSlots();
     }
-    setSuccessMessage(null); // Clear success message when view changes
-    setError(null); // Clear error message when view changes
+    setSuccessMessage(null);
+    setError(null);
   }, [view, fetchSlots, fetchMyBookings]);
 
   const handleSelect = (key) => {
     setView(key);
     setError(null);
-    setSuccessMessage(null); // Clear messages when switching views
+    setSuccessMessage(null);
     navigate(`/book?view=${key}`);
   };
 
@@ -84,18 +84,15 @@ const SlotManager = () => {
       const bookingData = {
         userId: user._id,
         slotId: slotId,
-        bookingDate: selectedDate.toISOString(), // Send date in ISO format
+        bookingDate: selectedDate.toISOString(),
       };
-
-      console.log("Booking data being sent:", bookingData);
 
       const token = localStorage.getItem("authToken");
       if (!token) {
         throw new Error("No authentication token found. Please log in.");
       }
 
-      // eslint-disable-next-line no-unused-vars
-      const response = await axios.post("/api/bookings", bookingData, {
+      await axios.post("/api/bookings", bookingData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -105,9 +102,8 @@ const SlotManager = () => {
       setSuccessMessage("Booking confirmed!");
       setError(null);
 
-      // Switch to MyBookings tab after successful booking
       setView("my-bookings");
-      fetchMyBookings(); // Fetch bookings to immediately reflect the new booking
+      fetchMyBookings();
     } catch (error) {
       console.error("Error booking slot:", error);
       setError(
@@ -142,9 +138,9 @@ const SlotManager = () => {
         </Row>
         <Row>
           <Col>
-            {error && <CustomAlert variant="danger">{error}</CustomAlert>}
+            {error && <CustomAlert variant="danger" message={error} />}
             {successMessage && (
-              <CustomAlert variant="success">{successMessage}</CustomAlert>
+              <CustomAlert variant="success" message={successMessage} />
             )}
             <Tabs
               activeKey={view}
@@ -172,7 +168,6 @@ const SlotManager = () => {
                   handleBooking={handleBooking}
                 />
               </Tab>
-
               {user && (
                 <Tab eventKey="my-bookings" title="My Bookings">
                   <MyBookingView
