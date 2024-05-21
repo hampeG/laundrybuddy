@@ -1,6 +1,6 @@
-# Laundry Buddy :tshirt: :laundry:
+# LaundryBuddy :tshirt:
 
-Welcome to Laundry Buddy, developed by Team Laundry Buddy as part of our university project. This web application is designed to streamline the laundry booking process for apartment residents, allowing them to book slots for laundry machines efficiently and manage their bookings seamlessly.
+Welcome to LaundryBuddy, developed by Team LaundryBuddy as part of our university project. This web application is designed to streamline the laundry booking process for apartment residents, allowing them to book slots for laundry machines efficiently and manage their bookings seamlessly.
 
 ## Features :sparkles:
 
@@ -29,12 +29,12 @@ These instructions will get you a copy of the project up and running on your loc
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/sams258/lab2-FS-HKR.git
+git clone https://github.com/hampeG/laundrybuddy.git
 ```
 
 Navigate to the project directory:
 ```
-cd lab2-FS-HKR
+cd laundrybuddy
 ```
 
 Install dependencies:
@@ -47,13 +47,19 @@ Build your bundle:
 npm run build
 ```
 
-Run backend and frontend concurrently in dev mode:
+Run backend in dev mode:
 
 ```
-npm run start
+npm start
+```
+Run Vite:
+
+```
+npm run dev
 ```
 
-Your default browser should be running the application on http://localhost:8080 and the database connected to the cloud.
+
+Your default browser should be running the application on http://localhost:5173 and the database connected to the cloud.
 
 Usage :memo:
 Login: Users can log in with their credentials.
