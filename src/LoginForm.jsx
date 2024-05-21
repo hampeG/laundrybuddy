@@ -43,7 +43,7 @@ function LoginForm() {
   }
 
   return (
-    <div>
+    <div className="mybs-lf">
       <div className="contact-form-container">
         <p className="contact-form-text">
           <FontAwesomeIcon icon={faSignInAlt} className="contact-icon" />

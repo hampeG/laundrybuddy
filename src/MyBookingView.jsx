@@ -29,7 +29,7 @@ const MyBookingView = ({ bookings, handleCancelBooking }) => {
   };
 
   return (
-    <div>
+    <div className="mybs">
       <h2>My Bookings</h2>
       {error && <CustomAlert variant="danger" message={error} />}
       {successMessage && <CustomAlert variant="success" message={successMessage} />}

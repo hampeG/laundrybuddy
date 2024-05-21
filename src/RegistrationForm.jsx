@@ -71,7 +71,7 @@ function RegistrationForm() {
       <div className="contact-form-container">
         <p className="contact-form-text">
           <FontAwesomeIcon icon={faSignInAlt} className="contact-icon" />
-          Register Form
+          Registration Form
         </p>
       </div>
       <div className="body2">
