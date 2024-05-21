@@ -115,7 +115,7 @@ const SlotManager = () => {
   };
 
   return (
-    <>
+    <maindiv>
       <div className="white-band-container">
         <div className="white-band-text">
           <FontAwesomeIcon icon={faCalendar} className="white-band-icon" />
@@ -180,7 +180,7 @@ const SlotManager = () => {
           </Col>
         </Row>
       </Container>
-    </>
+    </maindiv>
   );
 };
 
