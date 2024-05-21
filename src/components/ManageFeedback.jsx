@@ -85,8 +85,6 @@ const ManageFeedback = () => {
           <tr>
             <th>First Name</th>
             <th>Last Name</th>
-            <th>Email</th>
-            <th>Phone Number</th>
             <th>Message</th>
             <th>Actions</th>
           </tr>
@@ -96,8 +94,6 @@ const ManageFeedback = () => {
             <tr key={feedback._id}>
               <td>{feedback.first_name}</td>
               <td>{feedback.last_name}</td>
-              <td>{feedback.email}</td>
-              <td>{feedback.phone_number}</td>
               <td>{feedback.message}</td>
               <td>
                 <Button

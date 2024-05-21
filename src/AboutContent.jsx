@@ -11,7 +11,7 @@ const AboutContent = () => {
             <Card.Body>
               <Card.Title>About Our Project</Card.Title>
               <Card.Text>
-                We are the Laundry Buddy team, made up of Hampus Gunnarsson, Sam
+                We are the LaundryBuddy team, made up of Hampus Gunnarsson, Sam
                 El Saati, and Zgjim Zhubaj. As students, we worked together on
                 this project, rotating roles between backend, frontend, and
                 database development. This collaborative approach ensured that
@@ -19,18 +19,18 @@ const AboutContent = () => {
                 project.
               </Card.Text>
               <Card.Text>
-                Our project, Laundry Buddy, aims to streamline the process of
+                Our project, LaundryBuddy, aims to streamline the process of
                 booking laundry slots in shared facilities. Users can easily see
                 available slots, make bookings, and manage their laundry
                 schedules from their devices. By making laundry management more
-                efficient and user-friendly, Laundry Buddy helps reduce the
+                efficient and user-friendly, LaundryBuddy helps reduce the
                 hassle of coordinating laundry times.
               </Card.Text>
               <Card.Text>
                 Throughout the development, we focused on creating an intuitive
                 user interface and robust backend system. We aimed to make
-                Laundry Buddy accessible and helpful for everyone, ensuring a
-                smooth experience for all users. We are proud of what we havee
+                LaundryBuddy accessible and helpful for everyone, ensuring a
+                smooth experience for all users. We are proud of what we have
                 achieved together and hope it makes a positive impact on those
                 who use it.
               </Card.Text>

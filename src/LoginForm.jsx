@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "./context/AuthContext";
-import "./ContactForm.css";
+import "./LoginForm.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignInAlt } from "@fortawesome/free-solid-svg-icons";
 import logo from "./images/lb-logo-sq-1.png";
@@ -16,8 +16,7 @@ function LoginForm() {
     password: "",
   });
 
-  const [errorMessage, setErrorMessage] = useState("");
-  const { login } = useAuth();
+  const { login, error, loading } = useAuth(); // Destructure loading and error from useAuth
 
   // Event handler for input changes
   function handleChange(e) {
@@ -31,8 +30,6 @@ function LoginForm() {
   // Event handler for form submission
   async function handleSubmit(e) {
     e.preventDefault();
-    setErrorMessage("");
-
     try {
       await login(
         formData.email,
@@ -41,9 +38,7 @@ function LoginForm() {
         sendToDashboard
       );
     } catch (error) {
-      setErrorMessage(
-        "Login failed. Please check your credentials and try again."
-      );
+      // Error handling is managed in AuthContext
     }
   }
 
@@ -57,7 +52,7 @@ function LoginForm() {
       </div>
       <div className="body1">
         <img src={logo} alt="Laundry Buddy Logo" className="Logo" />
-        {errorMessage && <div className="error">{errorMessage}</div>}
+        {error && <div className="error">{error}</div>}
         <form onSubmit={handleSubmit}>
           <div>
             <input
@@ -83,7 +78,9 @@ function LoginForm() {
               required
             />
           </div>
-          <button type="submit">Login</button>
+          <button type="submit" disabled={loading}>
+            {loading ? "Logging in..." : "Login"}
+          </button>
           <p className="register-link">
             <Link to="/register">Not a member? Create account here</Link>
           </p>

@@ -2,7 +2,6 @@
     background-color: #FFD02C;
     height: 40px;
     width: 100%;
-    position: fixed;
     bottom: 0;
     z-index: 999;
 }

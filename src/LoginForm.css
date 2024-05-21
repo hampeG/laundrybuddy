@@ -1,0 +1,196 @@
+body {
+  background: linear-gradient(
+    to bottom,
+    rgba(169, 169, 169, 1),
+    rgba(14, 187, 156, 1) 100%
+  );
+  scroll-behavior: smooth;
+  min-height: 100vh;
+  background-attachment: fixed;
+  font-family: Arial, sans-serif !important;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff !important;
+  font-family: Arial, sans-serif !important;
+  border-radius: 20px;
+  margin: auto;
+  margin-top: 20px;
+  padding: 20px;
+  max-width: 500px;
+  width: 90%;
+  height: 555px;
+}
+.body1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff !important;
+  font-family: Arial, sans-serif !important;
+  border-radius: 20px;
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 20px;
+  max-width: 500px;
+  width: 90%;
+  height: 455px;
+}
+
+.body2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff !important;
+  font-family: Arial, sans-serif !important;
+  border-radius: 20px;
+  margin: auto;
+  margin-top: 20px;
+  padding: 20px;
+  max-width: 500px;
+  width: 90%;
+  height: 455px;
+}
+
+.register-link {
+  text-align: center;
+  margin-top: 40px; /* Adjust the value as needed */
+}
+
+.Logo {
+  width: 70px;
+  height: 70px;
+  margin-top: -40px !important;
+  margin-bottom: 30px;
+}
+
+form {
+  background-color: #ffffff;
+  padding: 10px;
+  border-radius: 20px;
+  width: 100%;
+}
+
+form div {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+textarea {
+  width: calc(100% - 22px);
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  color: #555;
+  background-color: #f4f4f4;
+  font-size: 14px;
+  margin-left: 10px !important;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+button[type="submit"] {
+  background-color: #ffd02c;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-left: 120px;
+  width: 200px;
+}
+
+button[type="submit"]:hover {
+  background-color: #ffc107;
+}
+
+.register-link {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.register-link a {
+  font-size: 18px !important;
+  color: #0ebb9c;
+  text-decoration: none;
+}
+
+/* Media queries for responsiveness */
+@media screen and (max-width: 600px) {
+  .body {
+    margin: 20px;
+  }
+
+  .Logo {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 5px;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  textarea {
+    padding: 6px;
+    font-size: 12px;
+  }
+
+  label {
+    font-size: 12px;
+  }
+
+  button[type="submit"] {
+    padding: 6px 12px;
+    font-size: 12px;
+    margin-left: 45px;
+  }
+}
+
+.contact-form-container {
+  background-color: #ffffff;
+  margin-left: 0px !important;
+  padding: 0px;
+  display: flex;
+  align-items: center;
+}
+
+.contact-form-text {
+  color: #0ebb9c;
+  font-weight: 600;
+  font-size: 24px;
+  margin-top: 30px !important;
+  margin-bottom: 30px !important;
+  margin-left: 120px !important;
+}
+
+.contact-icon {
+  color: #0ebb9c;
+  font-size: 24px;
+  margin-right: 10px;
+}
+
+/* Media queries for responsiveness */
+@media screen and (max-width: 768px) {
+  .contact-form-container {
+    padding: 10px;
+  }
+
+  .contact-form-text,
+  .contact-icon {
+    font-size: 18px;
+  }
+}

@@ -14,6 +14,7 @@ const MainPage = () => {
   };
 
   return (
+    <>
     <Container fluid className="mainContainer">
       <div className="content">
         <h2>Book Your Laundry Time</h2>
@@ -30,6 +31,7 @@ const MainPage = () => {
       </div>
       <img src={laundryHero} alt="Laundry Buddy" className="heroImage" />
     </Container>
+    </>
   );
 };
 

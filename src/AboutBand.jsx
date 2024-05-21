@@ -8,7 +8,7 @@ const AboutBand = () => {
     <div className="white-band-container">
       <div className="white-band-text">
         <FontAwesomeIcon icon={faFileLines} className="white-band-icon" />
-        About Laundry Buddy
+        About LaundryBuddy
       </div>
     </div>
   );

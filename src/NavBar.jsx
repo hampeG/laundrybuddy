@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { Navbar, Nav, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -6,7 +6,6 @@ import {
   faAddressBook,
   faCalendarAlt,
   faInfoCircle,
-  faUser,
   faSignInAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import "./NavBar.css";
@@ -17,6 +16,27 @@ import logo from "./images/lb-logo.png";
 const NavBar = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const navRef = useRef(null);
+
+  useEffect(() => {
+    // Function to handle clicks outside the navbar
+    const handleClickOutside = (event) => {
+      if (navRef.current && !navRef.current.contains(event.target)) {
+        const navbarToggler = document.querySelector(".navbar-toggler");
+        if (navbarToggler && !navbarToggler.classList.contains("collapsed")) {
+          navbarToggler.click();
+        }
+      }
+    };
+
+    // Add event listener when the component mounts
+    document.addEventListener("mousedown", handleClickOutside);
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [navRef]);
 
   // Function to handle logout
   const handleLogout = () => {
@@ -54,7 +74,7 @@ const NavBar = () => {
   };
 
   return (
-    <Navbar expand="lg" fixed="top" className="custom-navbar">
+    <Navbar ref={navRef} expand="lg" fixed="top" className="custom-navbar">
       <Navbar.Brand href="#">
         <Link to="/" className="link">
           <img

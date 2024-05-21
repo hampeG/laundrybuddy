@@ -7,17 +7,20 @@ import PropTypes from "prop-types";
 const AuthContext = createContext(null);
 
 // Custom hook to use the auth context
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => useContext(AuthContext);
 
 // AuthProvider component that wraps your app and provides an auth object
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null); // New state for error message
   const navigate = useNavigate();
 
   // Function to log in a user
   const login = async (email, password, redirectPath, sendToDashboard) => {
     setLoading(true);
+    setError(null); // Clear previous error messages
     try {
       const response = await axios.post("/api/login", { email, password });
       const { token, _id, role } = response.data;
@@ -27,20 +30,21 @@ export const AuthProvider = ({ children }) => {
         setLoading(false);
 
         if (sendToDashboard) {
-          if (role === 'Owner') {
-            redirectPath = '/owner';
-          } else if (role === 'Admin') {
-            redirectPath = '/admin';
-          } else if (role === 'Tenant') {
-            redirectPath = '/user';
+          if (role === "Owner") {
+            redirectPath = "/owner";
+          } else if (role === "Admin") {
+            redirectPath = "/admin";
+          } else if (role === "Tenant") {
+            redirectPath = "/user";
           }
         }
         navigate(redirectPath); // Redirect to the specified route after login
       }
     } catch (error) {
       console.error("Login failed:", error);
+      setError("Invalid email or password"); // Set an error message
       setLoading(false);
-      // Handle errors (e.g., show an error message)
+      throw error; // Rethrow the error to be caught in the form
     }
   };
 
@@ -83,6 +87,7 @@ export const AuthProvider = ({ children }) => {
     loading,
     login,
     logout,
+    error, // Provide error state
   };
 
   return (

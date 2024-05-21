@@ -8,6 +8,7 @@ import * as emailController from "./controllers/EmailController.js";
 import authenticateToken from "./middlewares/authenticateToken.js";
 import { sendReply } from "./controllers/emailController2.js";
 
+
 import {
   getTotalBookingsCount,
   getBookingsByUserType,

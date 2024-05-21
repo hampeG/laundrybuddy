@@ -1,5 +1,6 @@
 import { useState } from "react";
-import "./ContactForm.css";
+import { useNavigate } from "react-router-dom";
+import "./LoginForm.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignInAlt } from "@fortawesome/free-solid-svg-icons";
 import logo from "./images/lb-logo-sq-1.png";
@@ -14,6 +15,7 @@ function RegistrationForm() {
 
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const navigate = useNavigate();
 
   // Event handler for input changes
   function handleChange(e) {
@@ -22,7 +24,6 @@ function RegistrationForm() {
       ...prevData,
       [name]: value,
     }));
-    console.log("formData:", formData);
   }
 
   // Event handler for form submission
@@ -39,19 +40,29 @@ function RegistrationForm() {
       });
 
       if (response.ok) {
-        setSuccessMessage("Account was successfully registered!");
+        setSuccessMessage(
+          "Account was successfully registered! Please wait while we redirect you to login."
+        );
         setFormData({
           first_name: "",
           last_name: "",
           email: "",
           password: "",
         });
+
+        // Wait for a few seconds before redirecting
+        setTimeout(() => {
+          navigate("/login");
+        }, 3000); // 3 seconds delay
       } else if (response.status === 409) {
         const data = await response.json();
         setErrorMessage(data.message);
+      } else {
+        setErrorMessage("Registration failed. Please try again.");
       }
     } catch (error) {
       console.error(`Error submitting form: ${error}`);
+      setErrorMessage("An error occurred. Please try again.");
     }
   }
 
