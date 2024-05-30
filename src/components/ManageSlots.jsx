@@ -24,17 +24,18 @@ const ManageSlots = () => {
   const [slots, setSlots] = useState([]);
   const [message, setMessage] = useState(null);
   const [error, setError] = useState(null);
-  const [displayCount, setDisplayCount] = useState(5); // State to manage number of slots displayed
+  const [displayCount, setDisplayCount] = useState(5);
 
   useEffect(() => {
     fetchSlots();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Adding an empty dependency array to ensure it runs only once on mount
+  }, []);
 
   const fetchSlots = async () => {
     try {
-      const response = await axios.get("/api/slots");
-      setSlots(sortSlots(response.data));
+      const { data } = await axios.get("/api/slots");
+      const allSlots = data;
+      setSlots(sortSlots(allSlots));
     } catch (error) {
       console.error("Error fetching slots:", error);
       setError("Failed to fetch slots");
@@ -42,38 +43,37 @@ const ManageSlots = () => {
   };
 
   const sortSlots = (slots) => {
-    return slots.sort(
-      (a, b) =>
-        new Date(a.date) - new Date(b.date) || a.time.localeCompare(b.time)
-    );
+    return slots.sort((a, b) => new Date(a.date) - new Date(b.date));
   };
 
   const handleCreateSlot = async (e) => {
     e.preventDefault();
 
-    const slotDateTime = new Date(`${date}T${time}`);
-    const now = new Date();
-    const oneDayInMilliseconds = 24 * 60 * 60 * 1000;
+    const slotDate = new Date(date);
+    const [hours, minutes] = time.split(":");
+    slotDate.setHours(hours);
+    slotDate.setMinutes(minutes);
 
-    if (slotDateTime - now < oneDayInMilliseconds) {
-      setError("Slot time must be at least 24 hours in the future.");
-      setMessage(null);
-      return;
-    }
+    const expiryDate = new Date(slotDate); // Set expiry to slot time
 
     try {
+      // eslint-disable-next-line no-unused-vars
       const response = await axios.post("/api/slots", {
-        date,
+        date: slotDate.toISOString(),
         time,
         availability: true,
+        expiryDate: expiryDate.toISOString(),
       });
-      setSlots(sortSlots([...slots, response.data]));
+      await fetchSlots();
       setMessage("Slot created successfully");
       setError(null);
       setDate("");
       setTime("");
     } catch (error) {
-      console.error("Error creating slot:", error);
+      console.error(
+        "Error creating slot:",
+        error.response ? error.response.data : error.message
+      );
       setMessage(null);
       setError("Failed to create slot");
     }
@@ -82,7 +82,7 @@ const ManageSlots = () => {
   const handleDeleteSlot = async (slotId) => {
     try {
       await axios.delete(`/api/slots/${slotId}`);
-      setSlots(slots.filter((slot) => slot._id !== slotId));
+      await fetchSlots();
       setMessage("Slot deleted successfully");
       setError(null);
     } catch (error) {
@@ -92,16 +92,26 @@ const ManageSlots = () => {
     }
   };
 
-  const formatDateTime = (date, time) => {
-    const [hours, minutes] = time.split(":");
-    const dateTime = new Date(date);
-    dateTime.setHours(hours);
-    dateTime.setMinutes(minutes);
-    return dateTime.toLocaleString([], {
-      dateStyle: "short",
-      timeStyle: "short",
-      hour12: true,
-    });
+  const formatDateTime = (dateString) => {
+    const [datePart, timePart] = dateString.split("T");
+    const [year, month, day] = datePart.split("-");
+    const [hours, minutes] = timePart.split(":");
+
+    const dateTime = new Date(year, month - 1, day, hours, minutes);
+
+    let displayHours = dateTime.getHours();
+    const displayMinutes = dateTime.getMinutes();
+    const ampm = displayHours >= 12 ? "PM" : "AM";
+    displayHours = displayHours % 12;
+    displayHours = displayHours ? displayHours : 12;
+    const minutesStr =
+      displayMinutes < 10 ? "0" + displayMinutes : displayMinutes;
+
+    const displayDay = dateTime.getDate();
+    const displayMonth = dateTime.getMonth() + 1;
+    const displayYear = dateTime.getFullYear();
+
+    return `${displayMonth}/${displayDay}/${displayYear}, ${displayHours}:${minutesStr} ${ampm}`;
   };
 
   return (
@@ -164,7 +174,7 @@ const ManageSlots = () => {
       <Table striped bordered hover className="rounded mt-2">
         <thead>
           <tr>
-            <th>Date & Time</th>
+            <th>Date & Time (GMT)</th>
             <th>Availability</th>
             <th>Actions</th>
           </tr>
@@ -172,7 +182,7 @@ const ManageSlots = () => {
         <tbody>
           {slots.slice(0, displayCount).map((slot) => (
             <tr key={slot._id}>
-              <td>{formatDateTime(slot.date, slot.time)}</td>
+              <td>{formatDateTime(slot.date)}</td>
               <td>{slot.availability ? "Available" : "Not Available"}</td>
               <td>
                 <Button

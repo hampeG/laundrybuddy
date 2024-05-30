@@ -19,7 +19,7 @@ app.get("*", (req, res) => {
 
 // We call the connection function to establish MongoDB connection
 connection()
-  .then(() => {
+  .then(async () => {
     // We start the server once the connection is established
     const PORT = process.env.PORT || 3000;
     app.listen(PORT, () => {

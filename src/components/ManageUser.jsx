@@ -10,7 +10,7 @@ import {
   ListGroup,
 } from "react-bootstrap";
 import CustomAlert from "../CustomAlert";
-import { useAuth } from "../context/AuthContext"; // Ensure this hook provides the current user's info
+import { useAuth } from "../context/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEdit,
@@ -39,7 +39,13 @@ const ManageUser = () => {
     const fetchUserInfo = async () => {
       try {
         const response = await axios.get(`/api/users/${user._id}`);
-        setUserInfo(response.data);
+        setUserInfo({
+          first_name: response.data.first_name || "",
+          last_name: response.data.last_name || "",
+          email: response.data.email || "",
+          phone_number: response.data.phone_number || "",
+          apartment_number: response.data.apartment_number || "",
+        });
       } catch (error) {
         console.error("Error fetching user info:", error);
         setError("Failed to fetch user info");
@@ -82,7 +88,13 @@ const ManageUser = () => {
     e.preventDefault();
     try {
       const response = await axios.put(`/api/users/${user._id}`, userInfo);
-      setUserInfo(response.data);
+      setUserInfo({
+        first_name: response.data.first_name || "",
+        last_name: response.data.last_name || "",
+        email: response.data.email || "",
+        phone_number: response.data.phone_number || "",
+        apartment_number: response.data.apartment_number || "",
+      });
       setMessage("User information updated successfully.");
       setError(null);
     } catch (error) {

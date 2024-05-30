@@ -7,31 +7,72 @@ import MyBookingView from "./MyBookingView";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "./context/AuthContext";
-import { Tabs, Tab, Container, Row, Col, Form } from "react-bootstrap";
+import {
+  Tabs,
+  Tab,
+  Container,
+  Row,
+  Col,
+  Form,
+  Button,
+  InputGroup,
+} from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./styles.css";
 import CustomAlert from "./CustomAlert";
 
 const SlotManager = () => {
+  const { user } = useAuth();
   const [slots, setSlots] = useState([]);
   const [view, setView] = useState("month");
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
-  const { user } = useAuth();
   const [myBookings, setMyBookings] = useState([]);
+  const [filteredSlots, setFilteredSlots] = useState([]);
+  const [inputDate, setInputDate] = useState(new Date());
   const location = useLocation();
   const navigate = useNavigate();
 
   const fetchSlots = useCallback(async () => {
     try {
       const response = await axios.get("/api/slots");
-      setSlots(response.data);
+      const allSlots = response.data;
+      const now = new Date();
+
+
+
+      // Step 2: Identify expired slots and log them
+      const expiredSlotIds = allSlots
+        .filter((slot) => new Date(slot.expiryDate) < now)
+        .map((slot) => slot._id);
+
+
+
+      // Step 3: Update expired slots in the backend
+      if (expiredSlotIds.length > 0) {
+        const updateResponse = await axios.put("/api/slots/expire", {
+          ids: expiredSlotIds,
+        });
+        console.log("Update response for expired slots:", updateResponse.data);
+      }
+
+      // Step 4: Filter out non-expired slots and update state
+      const nonExpiredSlots = allSlots.filter(
+        (slot) => new Date(slot.expiryDate) >= now
+      );
+      setSlots(nonExpiredSlots);
+      setFilteredSlots(nonExpiredSlots);
+      console.log("Non-expired slots:", nonExpiredSlots);
     } catch (error) {
       console.error("Error fetching slots:", error);
       setError("Error fetching slots. Please try again later.");
     }
   }, []);
+
+  useEffect(() => {
+    fetchSlots();
+  }, [fetchSlots]);
 
   const fetchMyBookings = useCallback(async () => {
     if (user && user._id) {
@@ -71,7 +112,12 @@ const SlotManager = () => {
   };
 
   const handleDateChange = (e) => {
-    setSelectedDate(new Date(e.target.value));
+    const value = e.target.value;
+    if (value) {
+      setInputDate(new Date(value));
+    } else {
+      setInputDate(null);
+    }
   };
 
   const handleBooking = async (slotId) => {
@@ -84,38 +130,78 @@ const SlotManager = () => {
       const bookingData = {
         userId: user._id,
         slotId: slotId,
-        bookingDate: selectedDate.toISOString(),
+        bookingDate: selectedDate ? selectedDate.toISOString() : null,
       };
+
+      console.log("Booking data:", bookingData);
 
       const token = localStorage.getItem("authToken");
       if (!token) {
         throw new Error("No authentication token found. Please log in.");
       }
 
-      await axios.post("/api/bookings", bookingData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
+      console.log("Authentication token found:", token);
 
-      setSuccessMessage("Booking confirmed!");
-      setError(null);
-
-      setView("my-bookings");
-      fetchMyBookings();
-    } catch (error) {
-      console.error("Error booking slot:", error);
-      setError(
-        error.response?.data?.message ||
-          "Error booking slot. Please try again later."
+      const response = await axios.post(
+        `/api/slots/${slotId}/book`,
+        bookingData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
       );
-      setSuccessMessage(null);
+
+      console.log("Slot booked successfully:", response.data);
+
+      // Refetch slots to update state
+      fetchSlots();
+    } catch (error) {
+      console.error(
+        "Error booking slot:",
+        error.response ? error.response.data : error.message
+      );
+      setError(error.message);
     }
+
+    setSuccessMessage(
+      "Slot booked successfully. Redirecting to My Bookings..."
+    );
+
+    // Redirect to My Bookings after 2 seconds
+    setTimeout(() => {
+      navigate("/book?view=my-bookings");
+    }, 2000);
+  };
+
+  const handleGoToDate = () => {
+    if (!inputDate || isNaN(inputDate)) {
+      setError("Invalid date. Please select a valid date.");
+      return;
+    }
+    setError(null);
+    setSuccessMessage(`Showing slots for ${inputDate.toDateString()}`);
+    setSelectedDate(inputDate);
+
+    // Filter slots by selected date
+    const filtered = slots.filter((slot) => {
+      const slotDate = new Date(slot.date);
+      return (
+        slotDate.getFullYear() === inputDate.getFullYear() &&
+        slotDate.getMonth() === inputDate.getMonth() &&
+        slotDate.getDate() === inputDate.getDate()
+      );
+    });
+    setFilteredSlots(filtered);
+  };
+
+  const formatDateString = (date) => {
+    return date ? date.toISOString().substring(0, 10) : "";
   };
 
   return (
-    <maindiv>
+    <>
       <div className="white-band-container">
         <div className="white-band-text">
           <FontAwesomeIcon icon={faCalendar} className="white-band-icon" />
@@ -128,11 +214,16 @@ const SlotManager = () => {
           <Col>
             <Form.Group controlId="datePicker">
               <Form.Label className="selectDate">Select Date:</Form.Label>
-              <Form.Control
-                type="date"
-                value={selectedDate.toISOString().substring(0, 10)}
-                onChange={handleDateChange}
-              />
+              <InputGroup>
+                <Button onClick={handleGoToDate} className="btn-date">
+                  Go to date
+                </Button>
+                <Form.Control
+                  type="date"
+                  value={formatDateString(inputDate)}
+                  onChange={handleDateChange}
+                />
+              </InputGroup>
             </Form.Group>
           </Col>
         </Row>
@@ -149,21 +240,21 @@ const SlotManager = () => {
             >
               <Tab eventKey="month" title="Month view">
                 <MonthView
-                  slots={slots}
+                  slots={filteredSlots}
                   selectedDate={selectedDate}
                   handleBooking={handleBooking}
                 />
               </Tab>
               <Tab eventKey="week" title="Week view">
                 <WeekView
-                  slots={slots}
+                  slots={filteredSlots}
                   selectedDate={selectedDate}
                   handleBooking={handleBooking}
                 />
               </Tab>
               <Tab eventKey="day" title="Day view">
                 <DayView
-                  slots={slots}
+                  slots={filteredSlots}
                   selectedDate={selectedDate}
                   handleBooking={handleBooking}
                 />
@@ -180,7 +271,7 @@ const SlotManager = () => {
           </Col>
         </Row>
       </Container>
-    </maindiv>
+    </>
   );
 };
 

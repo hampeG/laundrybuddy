@@ -5,7 +5,7 @@ import mongoose from "mongoose";
 
 class BookingService {
   static async createBooking(userId, slotId, bookingDate) {
-    const session = await mongoose.startSession();
+    const session = await mongoose.connection.startSession();
     session.startTransaction();
     try {
       // Validate the user
@@ -60,15 +60,16 @@ class BookingService {
     const booking = await Booking.findById(bookingId).populate("slot_id");
     if (!booking) throw new Error("Booking not found");
 
-    const currentTime = new Date();
+    /* const currentTime = new Date();
     const slotDate = new Date(booking.slot_id.date);
-    const hoursDiff = (slotDate - currentTime) / (1000 * 60 * 60);
+    // eslint-disable-next-line no-unused-vars
+     const hoursDiff = (slotDate - currentTime) / (1000 * 60 * 60);
 
-    if (hoursDiff < 24) {
+         if (hoursDiff < 24) {
       throw new Error(
         "Cancellation must be at least 24 hours before the slot date"
       );
-    }
+    } */
 
     booking.status = "Canceled";
     await booking.save();
@@ -82,6 +83,28 @@ class BookingService {
     await slot.save();
 
     return booking;
+  }
+
+  static async handleSlotExpiry(slot, session) {
+    const now = new Date();
+    if (slot.date < now) {
+      if (!slot.availability) {
+        const booking = await Booking.findOne({
+          slot_id: slot._id,
+          status: "Booked",
+        }).session(session);
+        if (booking) {
+          booking.status = "Canceled";
+          await booking.save({ session });
+
+          const user = await User.findById(booking.user_id).session(session);
+          user.bookingCredit++;
+          await user.save({ session });
+        }
+      }
+      slot.availability = false;
+      await slot.save({ session });
+    }
   }
 }
 

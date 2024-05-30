@@ -1,6 +1,3 @@
-maindiv {
-  margin-bottom: 40px !important;
-}
 
 .booking-view {
   font-size: 0.8rem;
@@ -93,4 +90,12 @@ maindiv {
   margin-top: 5px !important;
   font-size: 0.8rem !important;
   color: white;
+}
+
+.btn-date {
+  height: calc(1.5em + .75rem + 8px); 
+  line-height: 1.5;
+  background-color: white !important;
+  color: black !important;
+  border-style: none;
 }
