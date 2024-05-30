@@ -118,14 +118,34 @@ const ManageUser = () => {
 
   const handleSendFeedback = async (e) => {
     e.preventDefault();
+
     try {
-      await axios.post("/api/contactForms", { ...userInfo, message: feedback });
+      // Ensure userInfo and feedback are correctly defined and not empty
+      if (!userInfo || !feedback) {
+        setError("User information and feedback are required.");
+        return;
+      }
+
+      const response = await axios.post("/api/contactForms", {
+        ...userInfo,
+        message: feedback,
+      });
+
+      // Clear the feedback form and set the success message
       setFeedback("");
       setMessage("Feedback sent successfully.");
       setError(null);
+
+      console.log("Feedback sent successfully:", response.data);
     } catch (error) {
-      console.error("Error sending feedback:", error);
-      setError("Failed to send feedback");
+      if (error.response) {
+        // Log detailed error information from the server response
+        console.error("Error sending feedback:", error.response.data);
+        setError(error.response.data.message || "Failed to send feedback");
+      } else {
+        console.error("Error sending feedback:", error.message);
+        setError("Failed to send feedback");
+      }
     }
   };
 
@@ -210,7 +230,9 @@ const ManageUser = () => {
               </Card.Title>
               <Form onSubmit={handleSendFeedback}>
                 <Form.Group controlId="formFeedback">
-                  <Form.Label>Feedback</Form.Label>
+                  <Form.Label>
+                    Feedback (add phone number to user information first)
+                  </Form.Label>
                   <Form.Control
                     as="textarea"
                     rows={3}
