@@ -40,14 +40,10 @@ const SlotManager = () => {
       const allSlots = response.data;
       const now = new Date();
 
-
-
       // Step 2: Identify expired slots and log them
       const expiredSlotIds = allSlots
         .filter((slot) => new Date(slot.expiryDate) < now)
         .map((slot) => slot._id);
-
-
 
       // Step 3: Update expired slots in the backend
       if (expiredSlotIds.length > 0) {
@@ -184,15 +180,36 @@ const SlotManager = () => {
     setSuccessMessage(`Showing slots for ${inputDate.toDateString()}`);
     setSelectedDate(inputDate);
 
-    // Filter slots by selected date
-    const filtered = slots.filter((slot) => {
-      const slotDate = new Date(slot.date);
-      return (
-        slotDate.getFullYear() === inputDate.getFullYear() &&
-        slotDate.getMonth() === inputDate.getMonth() &&
-        slotDate.getDate() === inputDate.getDate()
-      );
-    });
+    // Filter slots based on the selected view (month, week, day)
+    let filtered;
+    if (view === "day") {
+      filtered = slots.filter((slot) => {
+        const slotDate = new Date(slot.date);
+        return (
+          slotDate.getFullYear() === inputDate.getFullYear() &&
+          slotDate.getMonth() === inputDate.getMonth() &&
+          slotDate.getDate() === inputDate.getDate()
+        );
+      });
+    } else if (view === "week") {
+      const startOfWeek = new Date(inputDate);
+      startOfWeek.setDate(startOfWeek.getDate() - 7);
+      const endOfWeek = new Date(inputDate);
+      endOfWeek.setDate(endOfWeek.getDate() + 7);
+      filtered = slots.filter((slot) => {
+        const slotDate = new Date(slot.date);
+        return slotDate >= startOfWeek && slotDate <= endOfWeek;
+      });
+    } else if (view === "month") {
+      const startOfMonth = new Date(inputDate);
+      startOfMonth.setDate(startOfMonth.getDate() - 30);
+      const endOfMonth = new Date(inputDate);
+      endOfMonth.setDate(endOfMonth.getDate() + 30);
+      filtered = slots.filter((slot) => {
+        const slotDate = new Date(slot.date);
+        return slotDate >= startOfMonth && slotDate <= endOfMonth;
+      });
+    }
     setFilteredSlots(filtered);
   };
 
